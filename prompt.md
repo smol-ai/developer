@@ -6,6 +6,9 @@ a Chrome Manifest V3 extension that reads the current page, and offers a popup U
   - in the background, receives the `storePageContent` data and stores it
   - only once the new page content is stored, then it pops up a full height window with a minimalistic styled html popup
   - in the popup script
+    - the popup should display a 10px tall rounded css animated red and white candy stripe loading indicator `loadingIndicator`, while waiting for the anthropic api to return
+      - with the currently fetching page title and a running timer in the center showing time elapsed since call started
+      - do not show it until the api call begins, and hide it when it ends.
     - retrieves the page content data using a `getPageContent` action (and the background listens for the `getPageContent` action and retrieves that data) and displays the title at the top of the popup
     - check extension storage for an `apiKey`, and if it isn't stored, asks for an API key to Anthropic Claude and stores it.
     - at the bottom of the popup, show a vertically resizable form that has:
@@ -41,7 +44,7 @@ a Chrome Manifest V3 extension that reads the current page, and offers a popup U
             <h3>{third section here}</h3>
             <!-- and so on, as many sections and details/summary subpoints as warranted -->
 
-            With all the words in brackets replaced by the summary of the content. sanitize HTML tags with HTML entities, so <template> becomes &lt;template&gt; . Only draw from the source content, do not hallucinate. Finally, end with other questions that the user might want answered based on this source content:
+            With all the words in brackets replaced by the summary of the content. sanitize non visual HTML tags with HTML entities, so <template> becomes &lt;template&gt; but <strong> stays the same. Only draw from the source content, do not hallucinate. Finally, end with other questions that the user might want answered based on this source content:
 
             <hr>
             <h2>Next prompts</h2>
@@ -52,12 +55,8 @@ a Chrome Manifest V3 extension that reads the current page, and offers a popup U
             </ul>`;
             ```js
       - and in the last row, on either side,
-        - a short number input with an id and label of `maxTokens`
         - and a nicely styled submit button with an id of `sendButton` (tactile styling that "depresses" on click)
       - only when `sendButton` is clicked, calls the Anthropic model endpoint https://api.anthropic.com/v1/complete with: 
-        - the popup should display a 10px tall rounded css animated red and white candy stripe loading indicator `loadingIndicator`, while waiting for the anthropic api to return
-          - with the currently fetching page title and a running timer in the center showing time elapsed since call started
-          - do not show it until the api call begins, and hide it when it ends.
         - append the page title
         - append the page content
         - add the prompt which is a concatenation of
@@ -65,7 +64,7 @@ a Chrome Manifest V3 extension that reads the current page, and offers a popup U
             finalPrompt = `Human: ${userPrompt} \n\n ${stylePrompt} \n\n Assistant:`
             ```
         - and use the `claude-instant-v1` model (if `pageContent` is <70k words) or the `claude-instant-v1-100k` model (if more) 
-        - requesting max tokens = the value of `maxTokens` if not nullish, or else default to the higher of (25% of the length of the page content, or 500 words)
+        - requesting max tokens = the higher of (25% of the length of the page content, or 750 words)
         - if another submit event is hit while the previous api call is still inflight, cancel that and start the new one
     - renders the Anthropic-generated result at the top of the popup in a div with an id of `content`
 
@@ -88,7 +87,7 @@ Important Details:
 
 - add styles to make sure the popup's styling follows the basic rules of web design, for example having margins around the body, and a system font stack.
 
-- style the popup body with a minimum width of 400 and height of 600.
+- style the popup body with <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css"> but insist on body margins of 16 and a minimum width of 400 and height of 600.
 
 ## debugging notes
 
