@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anthropic Claude Summary Extension</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <form>
+        <label for="userPrompt">User Prompt:</label>
+        <textarea id="userPrompt"></textarea>
+        <label for="stylePrompt">Style Prompt:</label>
+        <textarea id="stylePrompt"></textarea>
+        <label for="maxTokens">Max Tokens:</label>
+        <input type="number" id="maxTokens">
+        <button type="button" id="sendButton">Request Summary</button>
+    </form>
+    <div id="content"></div>
+    <div id="loadingIndicator" style="display:none;"></div>
+    <script src="popup.js"></script>
+</body>
+</html>
