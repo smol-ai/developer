@@ -1,6 +1,6 @@
 # smol developer
 
-***Human-centric & Coherent Whole Program Synthesis***
+***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
 
 > [Build the thing that builds the thing!](https://twitter.com/swyx/status/1657578738345979905) a `smol dev` for every dev in every situation
 
@@ -8,9 +8,14 @@ this is a prototype of a "junior developer" agent (aka `smol dev`) that scaffold
 
 AI that is helpful, harmless, and honest is complemented by a codebase that is simple, safe, and smol - <200 lines of Python and Prompts, so this is easy to understand and customize.
 
-<img src="https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large" align="center" />
+<p align="center">
+  <img height=200 src="https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large" />
+</p>
 
-*engineering with prompts, rather than prompt engineering* The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer centric, workflow:
+
+*engineering with prompts, rather than prompt engineering* 
+
+The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer centric, workflow:
 
 - Human writes a basic prompt for the app they want to build
 - `main.py` generates code
@@ -23,7 +28,18 @@ AI that is helpful, harmless, and honest is complemented by a codebase that is s
 
 Loop until happiness is attained. Notice that AI is only used as long as it is adding value - once it gets in your way, just take over the codebase from your smol junior developer with no fuss and no hurt feelings. (*we could also have smol-dev take over an existing codebase and bootstrap its own prompt... but that's a Future Direction*)
 
-*Not no code, not low code, but some third thing.* Perhaps a higher order evolution of programming where you still need to be technical, but no longer have to implement every detail at least to scaffold things out.
+*Not no code, not low code, but some third thing.* 
+
+Perhaps a higher order evolution of programming where you still need to be technical, but no longer have to implement every detail at least to scaffold things out.
+
+## video demo
+
+
+<p align="center">
+  <a href="https://youtu.be/UCo7YeTy-aE">
+  <img height=200 src="https://github.com/smol-ai/developer/assets/6764957/47114b38-d745-4868-8108-734cd12b67b0" />
+  </a>
+</p>
 
 ### innovations and insights
 
