@@ -37,7 +37,7 @@ Perhaps a higher order evolution of programming where you still need to be techn
 
 <p align="center">
   <a href="https://youtu.be/UCo7YeTy-aE">
-  <img height=200 src="[https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large](https://github.com/smol-ai/developer/assets/6764957/47114b38-d745-4868-8108-734cd12b67b0)" />
+  <img height=200 src="https://github.com/smol-ai/developer/assets/6764957/47114b38-d745-4868-8108-734cd12b67b0)" />
   </a>
 </p>
 
