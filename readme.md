@@ -91,11 +91,11 @@ you'll have to adapt this code on a fork if you want to use it on other infra. p
 
 ### trying the example chrome extension
 
-this is `a Chrome Manifest V3 extension that reads the current page, and offers a popup UI that has the page title+content and a textarea for a prompt (with a default value we specify). When the user hits submit, it sends the page title+content to the Anthropic Claude API along with the up to date prompt to summarize it. The user can modify that prompt and re-send the prompt+content to get another summary view of the content.`
+the `/generated` and `/exampleChromeExtension` folder contains `a Chrome Manifest V3 extension that reads the current page, and offers a popup UI that has the page title+content and a textarea for a prompt (with a default value we specify). When the user hits submit, it sends the page title+content to the Anthropic Claude API along with the up to date prompt to summarize it. The user can modify that prompt and re-send the prompt+content to get another summary view of the content.`
 
 - go to Manage Extensions in Chrome
 - load unpacked
-- find the `exampleChromeExtension` folder in your file system and load it
+- find the relevant folder in your file system and load it
 - go to any content heavy site
 - click the cute bird
 - see it work
