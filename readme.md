@@ -32,6 +32,10 @@ Loop until happiness is attained. Notice that AI is only used as long as it is a
 
 Perhaps a higher order evolution of programming where you still need to be technical, but no longer have to implement every detail at least to scaffold things out.
 
+## video demo
+
+[![image](https://github.com/smol-ai/developer/assets/6764957/47114b38-d745-4868-8108-734cd12b67b0)](https://youtu.be/UCo7YeTy-aE)
+
 ### innovations and insights
 
 > Please subscribe to https://latent.space/ for a fuller writeup and insights and reflections
