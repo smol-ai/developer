@@ -185,9 +185,13 @@ def write_file(filename, filecode, directory):
     # Output the filename in blue color
     print("\033[94m" + filename + "\033[0m")
     print(filecode)
+    
+    file_path = directory + "/" + filename
+    dir = os.path.dirname(file_path)
+    os.makedirs(dir, exist_ok=True)
 
     # Open the file in write mode
-    with open(directory + "/" + filename, "w") as file:
+    with open(file_path, "w") as file:
         # Write content to the file
         file.write(filecode)
 
