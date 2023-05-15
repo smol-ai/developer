@@ -80,7 +80,7 @@ unfortunately this project also uses 3 waitlisted things:
 - gpt4 api (private beta) - can use 3.5 but obviously wont be as good
 - (for the demo project) anthropic claude 100k context api (private beta)
 
-> yes, the most important skill in being an ai engineer is social engineering to get off waitlists.
+> yes, the most important skill in being an ai engineer is social engineering to get off waitlists. Modal will let you in if you say the keyword "swyx"
 
 you'll have to adapt this code on a fork if you want to use it on other infra. please open issues/PRs and i'll happily highlight your fork here.
 
