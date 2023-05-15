@@ -172,7 +172,7 @@ things to try/would accept open issue discussions and PRs:
 - **bootstrap the `prompt.md`** for existing codebases - write a script to read in a codebase and write a descriptive, bullet pointed prompt that generates it
   - done by `smol pm`, but its not very good yet - would love for some focused polish/effort until we have quine smol developer that can generate itself lmao
 - **ability to install its own dependencies**
-  - this leaks into depending on the execution environment, which we all know is the path to dependency madness. how to avoid? dockerize? nix?
+  - this leaks into depending on the execution environment, which we all know is the path to dependency madness. how to avoid? dockerize? nix? [web container](https://twitter.com/litbid/status/1658154530385670150)?
   - Modal has an interesting possibility: generate functions that speak modal which also solves the dependency thing https://twitter.com/akshat_b/status/1658146096902811657
 - **self-heal** by running the code itself and use errors as information for reprompting 
   - however its a bit hard to get errors from the chrome extension environment so we did not try this
