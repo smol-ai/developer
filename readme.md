@@ -34,12 +34,7 @@ Perhaps a higher order evolution of programming where you still need to be techn
 
 ## video demo
 
-
-<p align="center">
-  <a href="https://youtu.be/UCo7YeTy-aE">
-  <img height=200 src="https://github.com/smol-ai/developer/assets/6764957/47114b38-d745-4868-8108-734cd12b67b0" />
-  </a>
-</p>
+[![https://i3.ytimg.com/vi/UCo7YeTy-aE/hqdefault.jpg](https://i3.ytimg.com/vi/UCo7YeTy-aE/hqdefault.jpg)](https://youtu.be/UCo7YeTy-aE)
 
 ### innovations and insights
 
