@@ -36,6 +36,12 @@ Perhaps a higher order evolution of programming where you still need to be techn
 
 [![https://i3.ytimg.com/vi/UCo7YeTy-aE/hqdefault.jpg](https://i3.ytimg.com/vi/UCo7YeTy-aE/hqdefault.jpg)](https://youtu.be/UCo7YeTy-aE)
 
+## arch diagram
+
+naturally generated with gpt4, like [we did for babyagi](https://twitter.com/swyx/status/1648724820316786688)
+![image](https://github.com/smol-ai/developer/assets/6764957/f8fc68f4-77f6-43ee-852f-a35fb195430a)
+
+
 ### innovations and insights
 
 > Please subscribe to https://latent.space/ for a fuller writeup and insights and reflections
