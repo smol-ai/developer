@@ -177,9 +177,9 @@ def main(prompt, directory=generatedDir, file=None):
             # write shared dependencies as a md file inside the generated directory
             write_file("shared_dependencies.md", shared_dependencies, directory)
 
-            for filename in list_actual:
-                filecode = generate_file(
-                    filename,
+            for name in list_actual:
+                filename, filecode = generate_file(
+                    name,
                     filepaths_string=filepaths_string,
                     shared_dependencies=shared_dependencies,
                     prompt=prompt,
