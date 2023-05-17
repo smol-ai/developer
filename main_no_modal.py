@@ -237,9 +237,6 @@ if __name__ == "__main__":
         print("Please provide a prompt")
         sys.exit(1)
     prompt = sys.argv[1]
-    directory = generatedDir
-    if len(sys.argv) > 2:
-        directory = sys.argv[2]
-    if len(sys.argv) > 3:
-        file = sys.argv[3]
+    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
+    file = sys.argv[3] if len(sys.argv) > 3 else None
     main(prompt, directory, file)
