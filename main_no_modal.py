@@ -122,7 +122,7 @@ def main(prompt, directory=generatedDir, file=None):
     # a prompt for reading the currently open page and generating some response from openai
 
     # call openai api with this prompt
-    filepaths_string = generate_response.call(
+    filepaths_string = generate_response(
         """You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
         
     When given their intent, create a complete, exhaustive list of filepaths that the user would write to make the program.
