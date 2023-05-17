@@ -1,3 +1,2 @@
-modal-client
 openai
 tiktoken
