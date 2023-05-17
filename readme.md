@@ -78,12 +78,17 @@ The feedback loop is very slow right now (`time` says about 2-4 mins to generate
 
 ## install
 
-it's basically `git clone` and have python installed. copy over `.example.env` to `.env` filling in your api keys.
+it's basically: 
 
-unfortunately this project also uses 3 waitlisted things:
+- `git clone https://github.com/smol-ai/developer`.
+- copy over `.example.env` to `.env` filling in your API keys.
 
-- modal.com (private beta - hit up the modal team to get an invite, and login)
-- gpt4 api (private beta) - can use 3.5 but obviously wont be as good
+There are no python dependencies to wrangle thanks to using Modal as a [self-provisioning runtime](https://www.google.com/search?q=self+provisioning+runtime).
+
+Unfortunately this project also uses 3 waitlisted things:
+
+- Modal.com - `pip install modal-client` (private beta - hit up the modal team to get an invite, and login)
+- GPT-4 api (private beta) - can use 3.5 but obviously wont be as good
 - (for the demo project) anthropic claude 100k context api (private beta)
 
 > yes, the most important skill in being an ai engineer is social engineering to get off waitlists. Modal will let you in if you say the keyword "swyx"
