@@ -88,13 +88,11 @@ There are no python dependencies to wrangle thanks to using Modal as a [self-pro
 Unfortunately this project also uses 3 waitlisted things:
 
 - Modal.com - `pip install modal-client` (private beta - hit up the modal team to get an invite, and login)
+  - You can run this project w/o Modal following these instructions:
+  - `pip install -r requirements.txt`
+  - `python main_no_modal.py YOUR_PROMPT_HERE`
 - GPT-4 api (private beta) - can use 3.5 but obviously wont be as good
 - (for the demo project) anthropic claude 100k context api (private beta)
-
-You can also simply run this project w/o using the above mentioned waitlisted things following this instructions:
-
-- `pip install -r requirements.txt`
-- `python main_no_modal.py YOUR_PROMPT_HERE`
 
 > yes, the most important skill in being an ai engineer is social engineering to get off waitlists. Modal will let you in if you say the keyword "swyx"
 
