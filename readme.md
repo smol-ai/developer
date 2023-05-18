@@ -1,3 +1,26 @@
+# smol-plugins
+**Generate OpenAI plugins for your favorite APIs**
+
+### Quick Start
+generate a plugin for the Etherscan API to fetch Ethereum account balances
+1. `python main_no_modal.py etherscan-plugin`  
+  this takes a few mins to run
+2. `cd generated && pip install -r requirements.txt`  
+  head into the generated repository and install requirements. There may be some dependency version issues, just remove them if that's case
+3. `python app.py`  
+  run your app. There may be some discreptancies between `openapi.yaml` and `app.py` routes that need to be fixed.
+4. Test your plugin in on OpenAI Interface by plugging pointing it to `localhost:3333`
+
+If you run into issues, you can see a working example in the `etherscan-plugin` repository. Note you will need an Etherscan key
+
+### Generate Your Own Plugin
+1. Run `python plugin_generator.py` and input an **app_name** and **description**. This will auto generate a plugin template. 
+2. Run `main_mo_modal.py` on newly created **{app_name}.md** file
+3. Repeat steps from quickstart.    
+
+
+
+
 # smol developer
 
 ***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
