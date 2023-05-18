@@ -4,7 +4,7 @@ import ast
 from time import sleep
 
 generatedDir = "generated"
-openai_model = "gpt-4"  # or 'gpt-3.5-turbo',
+openai_model = "gpt-3.5-turbo"  # or 'gpt-3.5-turbo',
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
 retry = os.environ.get("RETRY", "false").lower() == "true"
 
@@ -122,7 +122,7 @@ def main(prompt, directory=generatedDir, file=None):
     # a prompt for reading the currently open page and generating some response from openai
 
     # call openai api with this prompt
-    filepaths_string = generate_response.call(
+    filepaths_string = generate_response(
         """You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
         
     When given their intent, create a complete, exhaustive list of filepaths that the user would write to make the program.
@@ -204,7 +204,7 @@ def write_file(filename, filecode, directory):
     # Open the file in write mode
     with open(file_path, "w") as file:
         # Write content to the file
-        file.write(filecode)
+        file.write(filecode[1])
 
 
 def clean_dir(directory):
@@ -233,6 +233,7 @@ def clean_dir(directory):
 
 
 if __name__ == "__main__":
+    file = None
     if len(sys.argv) < 2:
         print("Please provide a prompt")
         sys.exit(1)
