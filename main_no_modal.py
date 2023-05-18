@@ -6,8 +6,6 @@ from time import sleep
 generatedDir = "generated"
 openai_model = "gpt-4"  # or 'gpt-3.5-turbo',
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
-retry = os.environ.get("RETRY", "false").lower() == "true"
-
 
 def generate_response(system_prompt, user_prompt, *args):
     import openai
@@ -71,34 +69,34 @@ def generate_file(
     # call openai api with this prompt
     filecode = generate_response(
         f"""You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
-        
+
     the app is: {prompt}
 
     the files we have decided to generate are: {filepaths_string}
 
     the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}
-    
+
     only write valid code for the given filepath and file type, and return only the code.
     do not add any other explanation, only return valid code for that file type.
     """,
         f"""
-    We have broken up the program into per-file generation. 
-    Now your job is to generate only the code for the file {filename}. 
+    We have broken up the program into per-file generation.
+    Now your job is to generate only the code for the file {filename}.
     Make sure to have consistent filenames if you reference other files we are also generating.
-    
-    Remember that you must obey 3 things: 
+
+    Remember that you must obey 3 things:
        - you are generating code for the file {filename}
        - do not stray from the names of the files and the shared dependencies we have decided on
        - MOST IMPORTANT OF ALL - the purpose of our app is {prompt} - every line of code you generate must be valid code. Do not include code fences in your response, for example
-    
+
     Bad response:
-    ```javascript 
+    ```javascript
     console.log("hello world")
     ```
-    
+
     Good response:
     console.log("hello world")
-    
+
     Begin generating the code now.
 
     """,
@@ -122,12 +120,12 @@ def main(prompt, directory=generatedDir, file=None):
     # a prompt for reading the currently open page and generating some response from openai
 
     # call openai api with this prompt
-    filepaths_string = generate_response.call(
+    filepaths_string = generate_response(
         """You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
-        
+
     When given their intent, create a complete, exhaustive list of filepaths that the user would write to make the program.
-    
-    only list the filepaths you would write, and return them as a python list of strings. 
+
+    only list the filepaths you would write, and return them as a python list of strings.
     do not add any other explanation, only return a python list of strings.
     """,
         prompt,
@@ -160,13 +158,13 @@ def main(prompt, directory=generatedDir, file=None):
             # understand shared dependencies
             shared_dependencies = generate_response(
                 """You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
-                
+
             In response to the user's prompt:
 
             ---
             the app is: {prompt}
             ---
-            
+
             the files we have decided to generate are: {filepaths_string}
 
             Now that we have a list of files, we need to understand what dependencies they share.
@@ -179,9 +177,9 @@ def main(prompt, directory=generatedDir, file=None):
             # write shared dependencies as a md file inside the generated directory
             write_file("shared_dependencies.md", shared_dependencies, directory)
 
-            for filename in list_actual:
-                filecode = generate_file(
-                    filename,
+            for name in list_actual:
+                filename, filecode = generate_file(
+                    name,
                     filepaths_string=filepaths_string,
                     shared_dependencies=shared_dependencies,
                     prompt=prompt,
@@ -237,9 +235,6 @@ if __name__ == "__main__":
         print("Please provide a prompt")
         sys.exit(1)
     prompt = sys.argv[1]
-    directory = generatedDir
-    if len(sys.argv) > 2:
-        directory = sys.argv[2]
-    if len(sys.argv) > 3:
-        file = sys.argv[3]
+    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
+    file = sys.argv[3] if len(sys.argv) > 3 else None
     main(prompt, directory, file)

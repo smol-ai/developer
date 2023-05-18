@@ -1,3 +1,4 @@
+import sys
 import os
 
 generatedDir = "generated"
@@ -95,7 +96,9 @@ def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
 
 
 if __name__ == "__main__":
-    import sys
-
+    if len(sys.argv) < 2:
+        print("Please provide a prompt")
+        sys.exit(1)
     prompt = sys.argv[1]
-    main(prompt)
+    model = sys.argv[2] if len(sys.argv) > 2 else "gpt-3.5-turbo"
+    main(prompt, model)
