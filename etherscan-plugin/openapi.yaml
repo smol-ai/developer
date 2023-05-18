@@ -8,6 +8,7 @@ servers:
 paths:
   /account/balance:
     get:
+      operationId: getBalance
       summary: Get account balance
       description: Retrieve the balance of a specific Ethereum address.
       parameters:
@@ -30,6 +31,7 @@ paths:
                     description: Account balance in wei
   /transactions:
     get:
+      operationId: getBalance
       summary: Get transaction history
       description: Retrieve the transaction history of a specific Ethereum address.
       parameters:
