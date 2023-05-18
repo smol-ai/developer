@@ -1,0 +1,110 @@
+openapi: 3.0.0
+info:
+  title: Etherscan ChatGPT Plugin
+  description: A ChatGPT plugin for interacting with Etherscan API. You can query account balance, transaction history, and other relevant information.
+  version: 1.0.0
+servers:
+  - url: http://localhost:3333
+paths:
+  /account/balance:
+    get:
+      operationId: getBalance
+      summary: Get account balance
+      description: Retrieve the balance of a specific Ethereum address.
+      parameters:
+        - name: address
+          in: query
+          description: Ethereum address to get the balance for
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Account balance
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  balance:
+                    type: string
+                    description: Account balance in wei
+  /transactions:
+    get:
+      operationId: getBalance
+      summary: Get transaction history
+      description: Retrieve the transaction history of a specific Ethereum address.
+      parameters:
+        - name: address
+          in: query
+          description: Ethereum address to get the transaction history for
+          required: true
+          schema:
+            type: string
+        - name: startblock
+          in: query
+          description: Starting block number
+          required: false
+          schema:
+            type: integer
+        - name: endblock
+          in: query
+          description: Ending block number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Transaction history
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    blockNumber:
+                      type: string
+                      description: Block number
+                    timeStamp:
+                      type: string
+                      description: Timestamp of the transaction
+                    hash:
+                      type: string
+                      description: Transaction hash
+                    from:
+                      type: string
+                      description: Sender address
+                    to:
+                      type: string
+                      description: Receiver address
+                    value:
+                      type: string
+                      description: Value transferred in wei
+                    gas:
+                      type: string
+                      description: Gas used
+                    gasPrice:
+                      type: string
+                      description: Gas price in wei
+                    isError:
+                      type: string
+                      description: Indicates if the transaction resulted in an error
+                    txreceipt_status:
+                      type: string
+                      description: Transaction receipt status
+                    input:
+                      type: string
+                      description: Input data of the transaction
+                    contractAddress:
+                      type: string
+                      description: Contract address if the transaction was a contract creation
+                    cumulativeGasUsed:
+                      type: string
+                      description: Cumulative gas used in the block containing the transaction
+                    gasUsed:
+                      type: string
+                      description: Gas used by the transaction
+                    confirmations:
+                      type: string
+                      description: Number of confirmations for the transaction
