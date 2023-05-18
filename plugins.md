@@ -1,9 +1,13 @@
 A ChatGPT plugin that requires a restful api with CORS, a documentation of the API in the OpenAPI yaml format, and a 
 JSON plugin manifest file that will define relevant metadata for the plugin.
 
+# Notes on building Plugins
+
+## API
 The API we will be building should wrap the etherscan API endpoints. Etherscan will need an API KEY, for now just create a `.env` file and I will put the key there afterwards
 
-### Notes on building Plugins
+Use python to write the API
+
 
 ## Plugin Manifest
 * Every plugin requires a ai-plugin.json file, which needs to be hosted on the API’s domain. For example, a company called example.com would make the plugin JSON file accessible via an https://example.com domain since that is where their API is hosted. When you install the plugin via the ChatGPT UI, on the backend we look for a file located at /.well-known/ai-plugin.json. The /.well-known folder is required and must exist on your domain in order for ChatGPT to connect with your plugin. If there is no file found, the plugin cannot be installed. For local development, you can use HTTP but if you are pointing to a remote server, HTTPS is required.
@@ -78,3 +82,6 @@ Since we are running this example locally, we want to set the server to point to
 Once you have created an API, manifest file, and OpenAPI specification for your API, you are now ready to connect the plugin via the ChatGPT UI.
 
 Using a local version of your API running, you can point the plugin interface to your localhost server. To connect the plugin with ChatGPT, navigate to the plugin store and select “Develop your own plugin”. Enter your localhost and port number (e.g localhost:3333). Note that only auth type none is currently supported for localhost development.
+
+## Other Notes
+* Make sure to include a requirements.txt file for dependencies
