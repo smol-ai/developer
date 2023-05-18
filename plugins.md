@@ -23,7 +23,7 @@ The minimal definition of the required ai-plugin.json file will look like the fo
 ```
 {
     "schema_version": "v1",
-    "name_for_human": "TODO Plugin",
+    "name_for_human": "API Plugin",
     "name_for_model": "todo",
     "description_for_human": "Plugin for managing a TODO list. You can add, remove and view your TODOs.",
     "description_for_model": "Plugin for managing a TODO list. You can add, remove and view your TODOs.",
@@ -58,6 +58,8 @@ Keep in mind the following limits in your OpenAPI specification, which are subje
 200 characters max for each API endpoint description/summary field in API specification
 200 characters max for each API param description field in API specification
 Since we are running this example locally, we want to set the server to point to your localhost URL. The rest of the OpenAPI specification follows the traditional OpenAPI format, you can learn more about OpenAPI formatting through various online resources. There are also many tools that auto generate OpenAPI specifications based on your underlying API code.
+
+* Make sure to add an `operationId` which is required.
 
 ## Running a plugin
 Once you have created an API, manifest file, and OpenAPI specification for your API, you are now ready to connect the plugin via the ChatGPT UI.
