@@ -18,14 +18,14 @@ def serve_plugin_manifest():
 def serve_openapi_spec():
     return send_from_directory(".", "openapi.yaml")
 
-@app.route("/api/etherscan/balance", methods=["GET"])
+@app.route("/account/balance", methods=["GET"])
 def get_balance():
     address = request.args.get("address")
     url = f"https://api.etherscan.io/api?module=account&action=balance&address={address}&tag=latest&apikey={ETHERSCAN_API_KEY}"
     response = requests.get(url)
     return jsonify(response.json())
 
-@app.route("/api/etherscan/transactions", methods=["GET"])
+@app.route("/transactions", methods=["GET"])
 def get_transactions():
     address = request.args.get("address")
     url = f"https://api.etherscan.io/api?module=account&action=txlist&address={address}&startblock=0&endblock=99999999&sort=asc&apikey={ETHERSCAN_API_KEY}"
