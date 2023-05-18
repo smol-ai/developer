@@ -5,7 +5,7 @@ description = input("Enter the description: ")
 app_name = input("Enter the app name: ")
 
 # Read the input .md file
-with open('plugins.md', 'r') as file:
+with open('./prompts/plugins/plugins.md', 'r') as file:
     filedata = file.read()
 
 # Replace the target string
