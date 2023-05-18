@@ -36,6 +36,12 @@ Perhaps a higher order evolution of programming where you still need to be techn
 
 https://youtu.be/UCo7YeTy-aE (sorry for sped up audio, we were optimizing for twitter, bad call)
 
+Another user shared their example (prompt => app in one image)
+
+[![image](https://github.com/smol-ai/developer/assets/6764957/15fa189a-3f52-4618-ac8e-2a77b6500264)](https://twitter.com/RobertCaracaus/status/1659312419485761536?s=20)
+
+I'm actively working on more examples, sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
+
 ## arch diagram
 
 naturally generated with gpt4, like [we did for babyagi](https://twitter.com/swyx/status/1648724820316786688)
