@@ -32,9 +32,9 @@ Loop until happiness is attained. Notice that AI is only used as long as it is a
 
 Perhaps a higher order evolution of programming where you still need to be technical, but no longer have to implement every detail at least to scaffold things out.
 
-## video demo
+## 6 minute video demo
 
-[![https://i3.ytimg.com/vi/UCo7YeTy-aE/hqdefault.jpg](https://i3.ytimg.com/vi/UCo7YeTy-aE/hqdefault.jpg)](https://youtu.be/UCo7YeTy-aE)
+https://youtu.be/UCo7YeTy-aE (sorry for sped up audio, we were optimizing for twitter, bad call)
 
 ## arch diagram
 
