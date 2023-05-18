@@ -49,39 +49,7 @@ Remember, this is just the template and we are building an API for etherscan.
 
 * The next step is to build the OpenAPI specification to document the API. The model in ChatGPT does not know anything about your API other than what is defined in the OpenAPI specification and manifest file. This means that if you have an extensive API, you need not expose all functionality to the model and can choose specific endpoints. For example, if you have a social media API, you might want to have the model access content from the site through a GET request but prevent the model from being able to comment on users posts in order to reduce the chance of spam.
 
-The OpenAPI specification is the wrapper that sits on top of your API. A basic OpenAPI specification will look like the following:
-```
-openapi: 3.0.1
-info:
-  title: TODO Plugin
-  description: A plugin that allows the user to create and manage a TODO list using ChatGPT.
-  version: 'v1'
-servers:
-  - url: http://localhost:3333
-paths:
-  /todos:
-    get:
-      operationId: getTodos
-      summary: Get the list of todos
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/getTodosResponse'
-components:
-  schemas:
-    getTodosResponse:
-      type: object
-      properties:
-        todos:
-          type: array
-          items:
-            type: string
-          description: The list of todos.
-```
-Remember, this is just the template and our spec should create routes for the etherscan API, not a todo API.
+The OpenAPI specification is the wrapper that sits on top of your API
 
 We start by defining the specification version, the title, description, and version number. When a query is run in ChatGPT, it will look at the description that is defined in the info section to determine if the plugin is relevant for the user query. You can read more about prompting in the writing descriptions section.
 
