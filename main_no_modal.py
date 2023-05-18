@@ -1,16 +1,27 @@
-import sys
-import os
-import ast
-from time import sleep
+#!/bin/python
 
-generatedDir = "generated"
-openai_model = "gpt-4"  # or 'gpt-3.5-turbo',
+import openai
+import tiktoken
+import argparse
+import ast
+import os
+import sys
+from time import sleep
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+# Set up your OpenAI API credentials
+openai.api_key = os.environ["OPENAI_API_KEY"]
+openai_model = os.environ.get("OPENAI_MODEL", "gpt-3.5-turbo")  # or 'gpt-3.5-turbo',
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 
 def generate_response(system_prompt, user_prompt, *args):
-    import openai
-    import tiktoken
-
     def reportTokens(prompt):
         encoding = tiktoken.encoding_for_model(openai_model)
         # print number of tokens in light gray, with first 10 characters of prompt in green
@@ -24,8 +35,6 @@ def generate_response(system_prompt, user_prompt, *args):
             + "\033[0m"
         )
 
-    # Set up your OpenAI API credentials
-    openai.api_key = os.environ["OPENAI_API_KEY"]
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -105,7 +114,7 @@ def generate_file(
     return filename, filecode
 
 
-def main(prompt, directory=generatedDir, file=None):
+def run(prompt, directory, file=None):
     # read file from prompt if it ends in a .md filetype
     if prompt.endswith(".md"):
         with open(prompt, "r") as promptfile:
@@ -230,7 +239,15 @@ def clean_dir(directory):
         os.makedirs(directory, exist_ok=True)
 
 
+def unwrap_or(item, default):
+    if item is not None:
+        return item
+    else:
+        return default
+
+
 if __name__ == "__main__":
+<<<<<<< Updated upstream
     if len(sys.argv) < 2:
         print("Please provide a prompt")
         sys.exit(1)
@@ -238,3 +255,23 @@ if __name__ == "__main__":
     directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
     file = sys.argv[3] if len(sys.argv) > 3 else None
     main(prompt, directory, file)
+=======
+    option_parser = argparse.ArgumentParser(
+        prog="Smol Plugin",
+        description="Generate ChatGPT plugins from project descriptions")
+    option_parser.add_argument("prompt", type=str)
+    option_parser.add_argument("-o", "--outdir", type=str)
+    option_parser.add_argument("-f", "--outfile", type=str)
+    option_parser.add_argument("-r", "--retry", type=bool)
+
+    options = option_parser.parse_args()
+    print(options)
+
+    prompt = options.prompt
+    out_directory = unwrap_or(options.outdir, ".")  # or 'gpt-3.5-turbo',
+    out_file = unwrap_or(options.outdir, None) 
+    retry = options.retry
+
+                
+    run(prompt, out_directory, out_file)
+>>>>>>> Stashed changes
