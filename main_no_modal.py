@@ -8,6 +8,7 @@ import os
 import sys
 from time import sleep
 from dotenv import load_dotenv
+from pathlib import Path
 
 
 load_dotenv()
@@ -112,6 +113,8 @@ def generate_file(
 
 
 def run(prompt, directory, file=None):
+    generate_output_directory(directory)
+
     # read file from prompt if it ends in a .md filetype
     if prompt.endswith(".md"):
         with open(prompt, "r") as promptfile:
@@ -159,7 +162,7 @@ def run(prompt, directory, file=None):
             )
             write_file(filename, filecode, directory)
         else:
-            clean_dir(directory)
+            # clean_dir(directory)
 
             # understand shared dependencies
             shared_dependencies = generate_response(
@@ -211,29 +214,10 @@ def write_file(filename, filecode, directory):
         file.write(filecode)
 
 
-def clean_dir(directory):
-    extensions_to_skip = [
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".gif",
-        ".bmp",
-        ".svg",
-        ".ico",
-        ".tif",
-        ".tiff",
-    ]  # Add more extensions if needed
-
-    # Check if the directory exists
-    if os.path.exists(directory):
-        # If it does, iterate over all files and directories
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                _, extension = os.path.splitext(file)
-                if extension not in extensions_to_skip:
-                    os.remove(os.path.join(root, file))
-    else:
-        os.makedirs(directory, exist_ok=True)
+def generate_output_directory(path):
+    if not os.path.isdir(path):
+        print(f"creating directory: {path}")
+        Path(path).mkdir(parents=True, exist_ok=True)
 
 
 def unwrap_or(item, default):
@@ -253,10 +237,8 @@ if __name__ == "__main__":
     option_parser.add_argument("-r", "--retry", type=bool)
 
     options = option_parser.parse_args()
-    print(options)
-
     prompt = options.prompt
-    out_directory = unwrap_or(options.outdir, ".")  # or 'gpt-3.5-turbo',
+    out_directory = unwrap_or(options.outdir, "./generated")  # or 'gpt-3.5-turbo',
     out_file = unwrap_or(options.outdir, None) 
     retry = options.retry
 
