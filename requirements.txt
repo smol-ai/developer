@@ -1,2 +1,5 @@
+argparse
+modal-client
 openai
+python-dotenv
 tiktoken

@@ -2,7 +2,7 @@
 __pycache__
 .vscode
 # Ignore everything in the generated directory
-/generated/*
+generated/*
 
 # Don't ignore .png files in the generated directory
 !/generated/*.png

@@ -1,16 +1,25 @@
-import sys
-import os
-import ast
-from time import sleep
+#!/bin/python
 
-generatedDir = "generated"
-openai_model = "gpt-4"  # or 'gpt-3.5-turbo',
+import openai
+import tiktoken
+import argparse
+import ast
+import os
+import sys
+from time import sleep
+from dotenv import load_dotenv
+from pathlib import Path
+
+
+load_dotenv()
+
+# Set up your OpenAI API credentials
+openai.api_key = os.environ["OPENAI_API_KEY"]
+openai_model = os.environ.get("OPENAI_MODEL", "gpt-3.5-turbo")  # or 'gpt-3.5-turbo',
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
 
-def generate_response(system_prompt, user_prompt, *args):
-    import openai
-    import tiktoken
 
+def generate_response(system_prompt, user_prompt, *args):
     def reportTokens(prompt):
         encoding = tiktoken.encoding_for_model(openai_model)
         # print number of tokens in light gray, with first 10 characters of prompt in green
@@ -24,8 +33,6 @@ def generate_response(system_prompt, user_prompt, *args):
             + "\033[0m"
         )
 
-    # Set up your OpenAI API credentials
-    openai.api_key = os.environ["OPENAI_API_KEY"]
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -105,7 +112,9 @@ def generate_file(
     return filename, filecode
 
 
-def main(prompt, directory=generatedDir, file=None):
+def run(prompt, directory, file=None):
+    generate_output_directory(directory)
+
     # read file from prompt if it ends in a .md filetype
     if prompt.endswith(".md"):
         with open(prompt, "r") as promptfile:
@@ -153,7 +162,7 @@ def main(prompt, directory=generatedDir, file=None):
             )
             write_file(filename, filecode, directory)
         else:
-            clean_dir(directory)
+            # clean_dir(directory)
 
             # understand shared dependencies
             shared_dependencies = generate_response(
@@ -205,36 +214,33 @@ def write_file(filename, filecode, directory):
         file.write(filecode)
 
 
-def clean_dir(directory):
-    extensions_to_skip = [
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".gif",
-        ".bmp",
-        ".svg",
-        ".ico",
-        ".tif",
-        ".tiff",
-    ]  # Add more extensions if needed
+def generate_output_directory(path):
+    if not os.path.isdir(path):
+        print(f"creating directory: {path}")
+        Path(path).mkdir(parents=True, exist_ok=True)
 
-    # Check if the directory exists
-    if os.path.exists(directory):
-        # If it does, iterate over all files and directories
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                _, extension = os.path.splitext(file)
-                if extension not in extensions_to_skip:
-                    os.remove(os.path.join(root, file))
+
+def unwrap_or(item, default):
+    if item is not None:
+        return item
     else:
-        os.makedirs(directory, exist_ok=True)
+        return default
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Please provide a prompt")
-        sys.exit(1)
-    prompt = sys.argv[1]
-    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
-    file = sys.argv[3] if len(sys.argv) > 3 else None
-    main(prompt, directory, file)
+    option_parser = argparse.ArgumentParser(
+        prog="Smol Plugin",
+        description="Generate ChatGPT plugins from project descriptions")
+    option_parser.add_argument("prompt", type=str)
+    option_parser.add_argument("-o", "--outdir", type=str)
+    option_parser.add_argument("-f", "--outfile", type=str)
+    option_parser.add_argument("-r", "--retry", type=bool)
+
+    options = option_parser.parse_args()
+    prompt = options.prompt
+    out_directory = unwrap_or(options.outdir, "./generated")  # or 'gpt-3.5-turbo',
+    out_file = unwrap_or(options.outdir, None) 
+    retry = options.retry
+
+                
+    run(prompt, out_directory, out_file)
