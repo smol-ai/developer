@@ -16,10 +16,7 @@ load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 openai_model = os.environ.get("OPENAI_MODEL", "gpt-3.5-turbo")  # or 'gpt-3.5-turbo',
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 
 def generate_response(system_prompt, user_prompt, *args):
     def reportTokens(prompt):
@@ -247,15 +244,6 @@ def unwrap_or(item, default):
 
 
 if __name__ == "__main__":
-<<<<<<< Updated upstream
-    if len(sys.argv) < 2:
-        print("Please provide a prompt")
-        sys.exit(1)
-    prompt = sys.argv[1]
-    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
-    file = sys.argv[3] if len(sys.argv) > 3 else None
-    main(prompt, directory, file)
-=======
     option_parser = argparse.ArgumentParser(
         prog="Smol Plugin",
         description="Generate ChatGPT plugins from project descriptions")
@@ -274,4 +262,3 @@ if __name__ == "__main__":
 
                 
     run(prompt, out_directory, out_file)
->>>>>>> Stashed changes
