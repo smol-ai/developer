@@ -4,7 +4,7 @@ JSON plugin manifest file that will define relevant metadata for the plugin.
 # Notes on building Plugins
 
 ## API
-{{description}}
+The API we will be building should wrap the etherscan API endpoints. You find Etherescan endpoints and name the routes appropriately. Etherscan will need an API KEY, for now just create a `.env` file and I will put the key there afterwards
 
 Use python to write the API
 
@@ -23,10 +23,10 @@ The minimal definition of the required ai-plugin.json file will look like the fo
 ```
 {
     "schema_version": "v1",
-    "name_for_human": "{{app_name}}",
-    "name_for_model": "{{app_name}}",
-    "description_for_human": "Plugin for managing a {{app_name}}.",
-    "description_for_model": "Plugin for managing a {{app_name}}.",
+    "name_for_human": "API Plugin",
+    "name_for_model": "todo",
+    "description_for_human": "Plugin for managing a TODO list. You can add, remove and view your TODOs.",
+    "description_for_model": "Plugin for managing a TODO list. You can add, remove and view your TODOs.",
     "auth": {
         "type": "none"
     },
