@@ -13,6 +13,9 @@ routes defined in app.py
 
 Last commit Working: 957ec8f42f090cb95bb32321ada02642d645a0ce
 
+Limitations
+* It has context over files but not contents of files which leads to hallucinations based on what files contain. This leads to a lot of bugs like calling methods that are not implemented. More work needs to be done on shared dependencies
+
 Next Steps
 * Create a template for all plugins that just require: `app name` & `description`
 * In the future use web scraper to automatically fill out `description` based on scraped API docs
