@@ -12,7 +12,6 @@ AI that is helpful, harmless, and honest is complemented by a codebase that is s
   <img height=200 src="https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large" />
 </p>
 
-
 *engineering with prompts, rather than prompt engineering* 
 
 The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer centric, workflow:
@@ -50,6 +49,14 @@ Perhaps a higher order evolution of programming where you still need to be techn
 I'm actively seeking more examples, please PR yours! 
 
 sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
+
+## major forks
+
+please send in alternative implementations, and deploy strategies on alternative stacks!
+
+- https://github.com/PicoCreator/smol-dev-js A pure JS variant of smol-dev, allowing even smoler incremental changes via prompting (if you dun want to do the whole spec2code thing), allowing you to plug it into any project live (for better or worse)
+- https://github.com/gmchad/smol-plugin automatically generate @openai plugins by specifying your API in markdown in smol-developer style
+- your fork here!
 
 ## arch diagram
 
