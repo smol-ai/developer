@@ -32,15 +32,24 @@ Loop until happiness is attained. Notice that AI is only used as long as it is a
 
 Perhaps a higher order evolution of programming where you still need to be technical, but no longer have to implement every detail at least to scaffold things out.
 
-## 6 minute video demo
+## examples/prompt gallery
 
-https://youtu.be/UCo7YeTy-aE (sorry for sped up audio, we were optimizing for twitter, bad call)
+- [6 minute video demo](https://youtu.be/UCo7YeTy-aE) - (sorry for sped up audio, we were optimizing for twitter, bad call)
+  - this was the original smol developer demo - going from prompt to full chrome extension that requests and stores and apikey, generates a popup window, reads and transmits page content, and usefully summarizes any website with Anthropic Claude, switching models up to the 100k one based on length of input
+  - the prompt is located in [prompt.md](https://github.com/smol-ai/developer/blob/main/prompt.md) and it outputs [/exampleChromeExtension](https://github.com/smol-ai/developer/tree/main/exampleChromeExtension)
+- `smol-plugin` - prompt to ChatGPT plugin ([tweet](https://twitter.com/ultrasoundchad/status/1659366507409985536?s=20), [fork](https://github.com/gmchad/smol-plugin))
 
-Another user shared their example (prompt => app in one image)
+  <img src="https://github.com/smol-ai/developer/assets/6764957/6ffaac3b-5d90-460a-a590-c8a8c004bd36" height=200 />
 
-[![image](https://github.com/smol-ai/developer/assets/6764957/15fa189a-3f52-4618-ac8e-2a77b6500264)](https://twitter.com/RobertCaracaus/status/1659312419485761536?s=20)
+- [Prompt to Pokemon App](https://twitter.com/RobertCaracaus/status/1659312419485761536?s=20)
+  
+  <img src="https://github.com/smol-ai/developer/assets/6764957/15fa189a-3f52-4618-ac8e-2a77b6500264" height=200 />
+  
+- [Political Campaign CRM Program example](https://github.com/smol-ai/developer/pull/22/files)
 
-I'm actively working on more examples, sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
+I'm actively seeking more examples, please PR yours! 
+
+sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
 
 ## arch diagram
 
