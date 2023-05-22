@@ -198,6 +198,16 @@ We leave the social and technical impacts of multilayer generative deep-frying o
 
 We have configured a development container for this project, which provides an isolated and consistent development environment. This approach is ideal for developers using Visual Studio Code's Remote - Containers extension or GitHub's Codespaces.
 
+If you have [VS Code](https://code.visualstudio.com/download) and [Docker](https://www.docker.com/products/docker-desktop) installed on your machine, you can make use of the devcontainer to create an isolated environment with all dependencies automatically installed and configured. This is a great way to ensure a consistent development experience across different machines.
+
+Here are the steps to use the devcontainer:
+
+1. Open this project in VS Code.
+2. When prompted to "Reopen in Container", choose "Reopen in Container". This will start the process of building the devcontainer defined by the `Dockerfile` and `.devcontainer.json` in the `.devcontainer` directory.
+3. Wait for the build to finish. The first time will be a bit longer as it downloads and builds everything. Future loads will be much faster.
+4. Once the build is finished, the VS Code window will reload and you are now working inside the devcontainer.
+
+
 ### Benefits of a Dev Container
 
 1. **Consistent Environment**: Every developer works within the same development setup, eliminating "it works on my machine" issues and easing the onboarding of new contributors.
@@ -210,21 +220,6 @@ We have configured a development container for this project, which provides an i
 
 5. **Portability**: This setup can be utilized on any computer with Docker and the appropriate IDE installed. Simply clone the repository and start the container.
 
-### Using the Dev Container
-
-To start using the dev container, follow these steps:
-
-1. Install Docker on your machine.
-
-2. Install the 'Remote - Containers' extension in Visual Studio Code.
-
-3. Clone the repository.
-
-4. Open the project in Visual Studio Code. When prompted, click on "Reopen in Container". 
-
-   Alternatively, you can use the Command Palette (View > Command Palette...). Type 'Remote-Containers: Open Folder in Container...' and select the cloned repository folder.
-
-5. The development container should start, and you'll be placed inside the container with all the tools and dependencies already set up.
 
 ## future directions
 
