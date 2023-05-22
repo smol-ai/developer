@@ -194,6 +194,38 @@ modal run main.py --prompt code2prompt-gpt4.md --directory code2prompt2code
 
 We leave the social and technical impacts of multilayer generative deep-frying of codebases as an exercise to the reader.
 
+## Development using a Dev Container
+
+We have configured a development container for this project, which provides an isolated and consistent development environment. This approach is ideal for developers using Visual Studio Code's Remote - Containers extension or GitHub's Codespaces.
+
+### Benefits of a Dev Container
+
+1. **Consistent Environment**: Every developer works within the same development setup, eliminating "it works on my machine" issues and easing the onboarding of new contributors.
+
+2. **Sandboxing**: Your development environment is isolated from your local machine, allowing you to work on multiple projects with differing dependencies without conflict.
+
+3. **Version Control for Environments**: Just as you version control your source code, you can do the same with your development environment. If a dependency update introduces issues, it's easy to revert to a previous state.
+
+4. **Easier CI/CD Integration**: If your CI/CD pipeline utilizes Docker, your testing environment will be identical to your local development environment, ensuring consistency across development, testing, and production setups.
+
+5. **Portability**: This setup can be utilized on any computer with Docker and the appropriate IDE installed. Simply clone the repository and start the container.
+
+### Using the Dev Container
+
+To start using the dev container, follow these steps:
+
+1. Install Docker on your machine.
+
+2. Install the 'Remote - Containers' extension in Visual Studio Code.
+
+3. Clone the repository.
+
+4. Open the project in Visual Studio Code. When prompted, click on "Reopen in Container". 
+
+   Alternatively, you can use the Command Palette (View > Command Palette...). Type 'Remote-Containers: Open Folder in Container...' and select the cloned repository folder.
+
+5. The development container should start, and you'll be placed inside the container with all the tools and dependencies already set up.
+
 ## future directions
 
 things to try/would accept open issue discussions and PRs:
