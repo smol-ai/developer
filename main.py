@@ -1,8 +1,6 @@
 import os
 import modal
 import ast
-import openai
-import tiktoken
 
 stub = modal.Stub("smol-developer-v1")
 generatedDir = "generated"
@@ -23,6 +21,11 @@ openai_model_max_tokens = 2000 # i wonder how to tweak this properly
     # timeout=120,
 )
 def generate_response(system_prompt, user_prompt, *args):
+    # IMPORTANT: Keep the import statements here due to Modal container restrictions.
+    # Shifting the imports to the start of the code may cause issues with package availability.
+    import openai
+    import tiktoken
+
     def reportTokens(prompt):
         encoding = tiktoken.encoding_for_model(openai_model)
         # print number of tokens in light gray, with first 10 characters of prompt in green
