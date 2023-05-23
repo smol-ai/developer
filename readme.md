@@ -50,12 +50,13 @@ I'm actively seeking more examples, please PR yours!
 
 sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
 
-## major forks
+## major forks/atlernatives
 
 please send in alternative implementations, and deploy strategies on alternative stacks!
 
-- https://github.com/PicoCreator/smol-dev-js A pure JS variant of smol-dev, allowing even smoler incremental changes via prompting (if you dun want to do the whole spec2code thing), allowing you to plug it into any project live (for better or worse)
-- https://github.com/colhountech/smol-ai-dotnet in C#!
+- **JS/TS**: https://github.com/PicoCreator/smol-dev-js A pure JS variant of smol-dev, allowing even smoler incremental changes via prompting (if you dun want to do the whole spec2code thing), allowing you to plug it into any project live (for better or worse)
+- **C#/Dotnet**: https://github.com/colhountech/smol-ai-dotnet in C#!
+- **Golang**: https://github.com/tmc/smol-dev-go in Go
 - https://github.com/gmchad/smol-plugin automatically generate @openai plugins by specifying your API in markdown in smol-developer style
 - your fork here!
 
