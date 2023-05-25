@@ -50,7 +50,7 @@ I'm actively seeking more examples, please PR yours!
 
 sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
 
-## major forks/atlernatives
+## major forks/alternatives
 
 please send in alternative implementations, and deploy strategies on alternative stacks!
 
