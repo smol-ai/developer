@@ -8,6 +8,8 @@ openai_model = "gpt-4"  # or 'gpt-3.5-turbo',
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
 
 def generate_response(system_prompt, user_prompt, *args):
+    # IMPORTANT: Keep the import statements here due to Modal container restrictions.
+    # Shifting the imports to the start of the code may cause issues with package availability.
     import openai
     import tiktoken
 
@@ -27,12 +29,11 @@ def generate_response(system_prompt, user_prompt, *args):
     # Set up your OpenAI API credentials
     openai.api_key = os.environ["OPENAI_API_KEY"]
 
-    messages = []
-    messages.append({"role": "system", "content": system_prompt})
+    messages = [{"role": "system", "content": system_prompt}]
     reportTokens(system_prompt)
     messages.append({"role": "user", "content": user_prompt})
     reportTokens(user_prompt)
-    # loop thru each arg and add it to messages alternating role between "assistant" and "user"
+    # Loop through each value `args` and add it to messages alternating role between "assistant" and "user"
     role = "assistant"
     for value in args:
         messages.append({"role": role, "content": value})
@@ -47,20 +48,26 @@ def generate_response(system_prompt, user_prompt, *args):
     }
 
     # Send the API request
-    keep_trying = True
-    while keep_trying:
+    retry_limit = 3
+    retry_count = 0
+    while retry_count < retry_limit:
         try:
+            # Get the reply from the API response
             response = openai.ChatCompletion.create(**params)
-            keep_trying = False
-        except Exception as e:
-            # e.g. when the API is too busy, we don't want to fail everything
-            print("Failed to generate response. Error: ", e)
-            sleep(30)
+            reply = response.choices[0]["message"]["content"]
+            return reply
+        except OpenAIError as e:
+            print("Failed to generate response. Error:", e)
+            retry_count += 1
+            sleep_time = 2 ** retry_count
+            sleep(sleep_time)
             print("Retrying...")
-
-    # Get the reply from the API response
-    reply = response.choices[0]["message"]["content"]
-    return reply
+        except RequestException as e:
+            print("Failed to connect to the API. Error:", e)
+            return None
+    else:
+        print("Retry limit exceeded. Unable to generate response.")
+        return None
 
 
 def generate_file(

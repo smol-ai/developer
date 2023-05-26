@@ -1,4 +1,3 @@
-import sys
 import os
 import modal
 import ast
@@ -22,6 +21,8 @@ openai_model_max_tokens = 2000 # i wonder how to tweak this properly
     # timeout=120,
 )
 def generate_response(system_prompt, user_prompt, *args):
+    # IMPORTANT: Keep the import statements here due to Modal container restrictions.
+    # Shifting the imports to the start of the code may cause issues with package availability.
     import openai
     import tiktoken
 
@@ -39,7 +40,7 @@ def generate_response(system_prompt, user_prompt, *args):
     reportTokens(system_prompt)
     messages.append({"role": "user", "content": user_prompt})
     reportTokens(user_prompt)
-    # loop thru each arg and add it to messages alternating role between "assistant" and "user"
+    # Loop through each value in args and add it to messages alternating role between "assistant" and "user"
     role = "assistant"
     for value in args:
         messages.append({"role": role, "content": value})
@@ -170,7 +171,7 @@ def main(prompt, directory=generatedDir, file=None):
             # write shared dependencies as a md file inside the generated directory
             write_file("shared_dependencies.md", shared_dependencies, directory)
             
-            # Existing for loop
+            # Generate code files for each file path in `list_actual`.
             for filename, filecode in generate_file.map(
                 list_actual, order_outputs=False, kwargs=dict(filepaths_string=filepaths_string, shared_dependencies=shared_dependencies, prompt=prompt)
             ):
@@ -178,7 +179,7 @@ def main(prompt, directory=generatedDir, file=None):
 
 
     except ValueError:
-        print("Failed to parse result: " + result)
+        print("Failed to parse result.")
 
 
 def write_file(filename, filecode, directory):
@@ -197,14 +198,12 @@ def write_file(filename, filecode, directory):
 
 
 def clean_dir(directory):
-    import shutil
-
-    extensions_to_skip = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']  # Add more extensions if needed
+    extensions_to_skip = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff', '.eps', '.raw']  # Add more extensions if needed
 
     # Check if the directory exists
     if os.path.exists(directory):
         # If it does, iterate over all files and directories
-        for root, dirs, files in os.walk(directory):
+        for root, files in os.walk(directory):
             for file in files:
                 _, extension = os.path.splitext(file)
                 if extension not in extensions_to_skip:
