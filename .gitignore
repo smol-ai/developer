@@ -6,3 +6,6 @@ __pycache__
 
 # Don't ignore .png files in the generated directory
 !/generated/*.png
+
+.idea
+/.idea/

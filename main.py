@@ -6,7 +6,7 @@ import ast
 stub = modal.Stub("smol-developer-v1")
 generatedDir = "generated"
 openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
-openai_model = "gpt-4" # or 'gpt-3.5-turbo',
+openai_model = "gpt-3.5-turbo"
 openai_model_max_tokens = 2000 # i wonder how to tweak this properly
 
 
@@ -186,8 +186,14 @@ def write_file(filename, filecode, directory):
     print("\033[94m" + filename + "\033[0m")
     print(filecode)
     
-    file_path = directory + "/" + filename
+    file_path = os.path.join(directory, filename)
     dir = os.path.dirname(file_path)
+
+    # Check if the filename is actually a directory
+    if os.path.isdir(file_path):
+        print(f"Error: {filename} is a directory, not a file.")
+        return
+
     os.makedirs(dir, exist_ok=True)
 
     # Open the file in write mode
