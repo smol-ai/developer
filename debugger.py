@@ -14,14 +14,14 @@ def read_file(filename):
 def walk_directory(directory):
     image_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']
     code_contents = {}
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            if not any(file.endswith(ext) for ext in image_extensions):
+    for dirpath, _, filenames in os.walk(directory):
+        for filename in filenames:
+            if not any(filename.endswith(ext) for ext in image_extensions):
                 try:
-                    relative_filepath = os.path.relpath(os.path.join(root, file), directory)
-                    code_contents[relative_filepath] = read_file(os.path.join(root, file))
+                    relative_filepath = os.path.relpath(os.path.join(dirpath, filename), directory)
+                    code_contents[relative_filepath] = read_file(os.path.join(dirpath, filename))
                 except Exception as e:
-                    code_contents[relative_filepath] = f"Error reading file {file}: {str(e)}"
+                    code_contents[relative_filepath] = f"Error reading file {filename}: {str(e)}"
     return code_contents
 
 
