@@ -14,12 +14,12 @@ def read_file(filename):
 def walk_directory(directory):
     image_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']
     code_contents = {}
-    for root, dirs, files in os.walk(directory):
-        for file in files:
+    for dirpath, _, filenames in os.walk(directory):
+        for file in filenames:
             if not any(file.endswith(ext) for ext in image_extensions):
                 try:
-                    relative_filepath = os.path.relpath(os.path.join(root, file), directory)
-                    code_contents[relative_filepath] = read_file(os.path.join(root, file))
+                    relative_filepath = os.path.relpath(os.path.join(dirpath, file), directory)
+                    code_contents[relative_filepath] = read_file(os.path.join(dirpath, file))
                 except Exception as e:
                     code_contents[relative_filepath] = f"Error reading file {file}: {str(e)}"
     return code_contents
@@ -54,6 +54,8 @@ def main(prompt, directory=generatedDir, model="gpt-3.5-turbo"):
     timeout=120,
 )
 def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
+    # IMPORTANT: Keep the import statements here due to Modal container restrictions.
+    # Shifting the imports to the start of the code may cause issues with package availability.
     import openai
 
     # Set up your OpenAI API credentials
@@ -62,7 +64,7 @@ def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
     messages = []
     messages.append({"role": "system", "content": system_prompt})
     messages.append({"role": "user", "content": user_prompt})
-    # loop thru each arg and add it to messages alternating role between "assistant" and "user"
+    # Loop through each value in `arg`` and add it to messages alternating role between "assistant" and "user"
     role = "assistant"
     for value in args:
         messages.append({"role": role, "content": value})
