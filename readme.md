@@ -46,8 +46,13 @@ Perhaps a higher order evolution of programming where you still need to be techn
   
 - [Political Campaign CRM Program example](https://github.com/smol-ai/developer/pull/22/files)
 - [Lessons from Creating a VSCode Extension with GPT-4](https://bit.kevinslin.com/p/leveraging-gpt-4-to-automate-the) (also on [HN](https://news.ycombinator.com/item?id=36071342))
-- [7 min Video: Smol AI Developer - Build ENTIRE Codebases With A Single Prompt](https://www.youtube.com/watch?v=DzRoYc2UGKI)
-- [12 min Video: SMOL AI - Develop Large Scale Apps with AGI in one click](https://www.youtube.com/watch?v=zsxyqz6SYp8)
+- [7 min Video: Smol AI Developer - Build ENTIRE Codebases With A Single Prompt](https://www.youtube.com/watch?v=DzRoYc2UGKI) produces a full working OpenAI CLI python app from a prompt
+
+  <img src="https://github.com/smol-ai/developer/assets/6764957/e80058f1-ea9c-42dd-87ff-004b61f08f2e" height=200 />
+  
+- [12 min Video: SMOL AI - Develop Large Scale Apps with AGI in one click](https://www.youtube.com/watch?v=zsxyqz6SYp8) scaffolds a surprisingly complex React/Node/MongoDB full stack app in 40 minutes and $9
+
+  <img src="https://github.com/smol-ai/developer/assets/6764957/c51f9f8c-021d-446a-b44d-7a6f48e64550" height=200 />
 
 I'm actively seeking more examples, please PR yours! 
 
@@ -112,16 +117,15 @@ it's basically:
 
 There are no python dependencies to wrangle thanks to using Modal as a [self-provisioning runtime](https://www.google.com/search?q=self+provisioning+runtime).
 
-Unfortunately this project also uses 3 waitlisted things:
+Unfortunately this project also uses 3 other things:
 
-- Modal.com - `pip install modal-client` (private beta - hit up the modal team to get an invite, and login)
+- Modal.com - [sign up](https://modal.com/signup), then `pip install modal-client`
+  - Modal helps
   - You can run this project w/o Modal following these instructions:
   - `pip install -r requirements.txt`
   - `python main_no_modal.py YOUR_PROMPT_HERE`
-- GPT-4 api (private beta) - can use 3.5 but obviously wont be as good
-- (for the demo project) anthropic claude 100k context api (private beta)
-
-> yes, the most important skill in being an ai engineer is social engineering to get off waitlists. Modal will let you in if you say the keyword "swyx"
+- GPT-4 api (private beta) - can use 3.5 but obviously wont be as good. we are working on a hosted version so you can try this out on our keys
+- (for the demo project only) anthropic claude 100k context api (private beta) - not important unless you're exactly trying to repro my demo
 
 you'll have to adapt this code on a fork if you want to use it on other infra. please open issues/PRs and i'll happily highlight your fork here.
 
