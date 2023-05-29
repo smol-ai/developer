@@ -196,9 +196,11 @@ We leave the social and technical impacts of multilayer generative deep-frying o
 
 ## Development using a Dev Container
 
+> this is a [new addition](https://github.com/smol-ai/developer/pull/30)! Please try it out and send in fixes if there are any issues.
+
 We have configured a development container for this project, which provides an isolated and consistent development environment. This approach is ideal for developers using Visual Studio Code's Remote - Containers extension or GitHub's Codespaces.
 
-If you have [VS Code](https://code.visualstudio.com/download) and [Docker](https://www.docker.com/products/docker-desktop) installed on your machine, you can make use of the devcontainer to create an isolated environment with all dependencies automatically installed and configured. This is a great way to ensure a consistent development experience across different machines.
+If you have [VS Code](https://code.visualstudio.com/download) and [Docker](https://www.swyx.io/running-docker-without-docker-desktop) installed on your machine, you can make use of the devcontainer to create an isolated environment with all dependencies automatically installed and configured. This is a great way to ensure a consistent development experience across different machines.
 
 Here are the steps to use the devcontainer:
 
@@ -208,7 +210,8 @@ Here are the steps to use the devcontainer:
 4. Once the build is finished, the VS Code window will reload and you are now working inside the devcontainer.
 
 
-### Benefits of a Dev Container
+<details>
+<summary> Benefits of a Dev Container </summary>
 
 1. **Consistent Environment**: Every developer works within the same development setup, eliminating "it works on my machine" issues and easing the onboarding of new contributors.
 
@@ -219,6 +222,7 @@ Here are the steps to use the devcontainer:
 4. **Easier CI/CD Integration**: If your CI/CD pipeline utilizes Docker, your testing environment will be identical to your local development environment, ensuring consistency across development, testing, and production setups.
 
 5. **Portability**: This setup can be utilized on any computer with Docker and the appropriate IDE installed. Simply clone the repository and start the container.
+</details>
 
 
 ## future directions
