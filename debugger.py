@@ -3,7 +3,7 @@ import modal
 from typing import Dict
 
 # Constants
-STUB = modal.Stub("smol-debugger-v1")
+MODAL = modal.Stub("smol-debugger-v1")
 GENERATED_DIR = "generated"
 BLOB_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']
 OPENAI_IMAGE = modal.Image.debian_slim().pip_install("openai")
@@ -31,7 +31,7 @@ def walk_directory(directory: str) -> Dict[str, str]:
                     code_contents[relative_filepath] = f"Error reading file {filename}: {e}"
     return code_contents
 
-@STUB.local_entrypoint()
+@MODAL.local_entrypoint()
 def main(prompt: str, directory=GENERATED_DIR, model="gpt-3.5-turbo"):
     """
     Main function to debug a program for a user based on their file system.
@@ -47,7 +47,7 @@ def main(prompt: str, directory=GENERATED_DIR, model="gpt-3.5-turbo"):
     # Print response in teal
     print(f"\033[96m{res}\033[0m")
 
-@STUB.function(
+@MODAL.function(
     image=OPENAI_IMAGE,
     secret=modal.Secret.from_dotenv(),
     retries=modal.Retries(
