@@ -45,6 +45,9 @@ Perhaps a higher order evolution of programming where you still need to be techn
   <img src="https://github.com/smol-ai/developer/assets/6764957/15fa189a-3f52-4618-ac8e-2a77b6500264" height=200 />
   
 - [Political Campaign CRM Program example](https://github.com/smol-ai/developer/pull/22/files)
+- [Lessons from Creating a VSCode Extension with GPT-4](https://bit.kevinslin.com/p/leveraging-gpt-4-to-automate-the) (also on [HN](https://news.ycombinator.com/item?id=36071342))
+- [7 min Video: Smol AI Developer - Build ENTIRE Codebases With A Single Prompt](https://www.youtube.com/watch?v=DzRoYc2UGKI)
+- [12 min Video: SMOL AI - Develop Large Scale Apps with AGI in one click](https://www.youtube.com/watch?v=zsxyqz6SYp8)
 
 I'm actively seeking more examples, please PR yours! 
 
