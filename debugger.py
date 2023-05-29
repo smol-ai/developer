@@ -5,7 +5,7 @@ from typing import Dict
 # Constants
 STUB = modal.Stub("smol-debugger-v1")
 GENERATED_DIR = "generated"
-IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']
+BLOB_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']
 OPENAI_IMAGE = modal.Image.debian_slim().pip_install("openai")
 
 def read_file(filename: str) -> str:
@@ -15,26 +15,20 @@ def read_file(filename: str) -> str:
     with open(filename, 'r') as file:
         return file.read()
 
-def is_image(file: str) -> bool:
-    """
-    Checks if a file is an image by its extension.
-    """
-    return any(file.endswith(ext) for ext in IMAGE_EXTENSIONS)
-
 def walk_directory(directory: str) -> Dict[str, str]:
     """
     Walks through a directory and returns a dictionary with the relative file path
-    and its content. Only non-image files are included.
+    and its content. Only non-blob files are included.
     """
     code_contents = {}
-    for root, dirs, files in os.walk(directory):
-        for file in files:
-            if not is_image(file):
-                relative_filepath = os.path.relpath(os.path.join(root, file), directory)
+    for dirpath, _, filenames in os.walk(directory):
+        for filename in filenames:
+            if not any(filename.endswith(ext) for ext in BLOB_EXTENSIONS):
+                relative_filepath = os.path.relpath(os.path.join(dirpath, filename), directory)
                 try:
-                    code_contents[relative_filepath] = read_file(os.path.join(root, file))
+                    code_contents[relative_filepath] = read_file(os.path.join(dirpath, filename))
                 except Exception as e:
-                    code_contents[relative_filepath] = f"Error reading file {file}: {e}"
+                    code_contents[relative_filepath] = f"Error reading file {filename}: {e}"
     return code_contents
 
 @STUB.local_entrypoint()
@@ -73,7 +67,7 @@ def generate_response(system_prompt: str, user_prompt: str, model="gpt-3.5-turbo
     # Set up your OpenAI API credentials
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-    messages = [{"# Continue from previous message
+    messages = []
     messages.append({"role": "system", "content": system_prompt})
     messages.append({"role": "user", "content": user_prompt})
 
