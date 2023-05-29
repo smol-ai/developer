@@ -1,0 +1,13 @@
+{
+    "name": "Python Project", // The name of your dev container setup, can be anything you choose.
+    "dockerFile": "Dockerfile", // The path to the Dockerfile that describes your development environment.
+    "settings": { 
+        "terminal.integrated.shell.linux": "/bin/bash", // Specifies the shell to be used in the integrated terminal in VS Code.
+        "python.pythonPath": "/usr/local/bin/python", // Specifies the path to the Python interpreter.
+        "python.linting.pylintEnabled": true, // Enables linting using pylint for Python files.
+        "python.linting.enabled": true // Enables linting for Python files in general.
+    },
+    "extensions": ["ms-python.python"], // Specifies VS Code extensions that should be installed in the dev container when it is created, in this case, the Microsoft Python extension.
+    "forwardPorts": [], // Specifies any ports that should be forwarded from the dev container to the host.
+    "postCreateCommand": "pip install -r requirements.txt" // Specifies a command or series of commands to run after the dev container is created.
+}

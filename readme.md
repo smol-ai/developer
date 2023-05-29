@@ -202,6 +202,37 @@ modal run main.py --prompt code2prompt-gpt4.md --directory code2prompt2code
 
 We leave the social and technical impacts of multilayer generative deep-frying of codebases as an exercise to the reader.
 
+## Development using a Dev Container
+
+> this is a [new addition](https://github.com/smol-ai/developer/pull/30)! Please try it out and send in fixes if there are any issues.
+
+We have configured a development container for this project, which provides an isolated and consistent development environment. This approach is ideal for developers using Visual Studio Code's Remote - Containers extension or GitHub's Codespaces.
+
+If you have [VS Code](https://code.visualstudio.com/download) and [Docker](https://www.swyx.io/running-docker-without-docker-desktop) installed on your machine, you can make use of the devcontainer to create an isolated environment with all dependencies automatically installed and configured. This is a great way to ensure a consistent development experience across different machines.
+
+Here are the steps to use the devcontainer:
+
+1. Open this project in VS Code.
+2. When prompted to "Reopen in Container", choose "Reopen in Container". This will start the process of building the devcontainer defined by the `Dockerfile` and `.devcontainer.json` in the `.devcontainer` directory.
+3. Wait for the build to finish. The first time will be a bit longer as it downloads and builds everything. Future loads will be much faster.
+4. Once the build is finished, the VS Code window will reload and you are now working inside the devcontainer.
+
+
+<details>
+<summary> Benefits of a Dev Container </summary>
+
+1. **Consistent Environment**: Every developer works within the same development setup, eliminating "it works on my machine" issues and easing the onboarding of new contributors.
+
+2. **Sandboxing**: Your development environment is isolated from your local machine, allowing you to work on multiple projects with differing dependencies without conflict.
+
+3. **Version Control for Environments**: Just as you version control your source code, you can do the same with your development environment. If a dependency update introduces issues, it's easy to revert to a previous state.
+
+4. **Easier CI/CD Integration**: If your CI/CD pipeline utilizes Docker, your testing environment will be identical to your local development environment, ensuring consistency across development, testing, and production setups.
+
+5. **Portability**: This setup can be utilized on any computer with Docker and the appropriate IDE installed. Simply clone the repository and start the container.
+</details>
+
+
 ## future directions
 
 things to try/would accept open issue discussions and PRs:
