@@ -6,7 +6,7 @@ import ast
 stub = modal.Stub("smol-developer-v1")
 generatedDir = "generated"
 openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
-openai_model = "gpt-3.5-turbo"
+openai_model = "gpt-4" # or 'gpt-3.5-turbo', but it's going to be worse at generating code so we strongly recommend gpt4. i know most people dont have access, we are working on a hosted version 
 openai_model_max_tokens = 2000 # i wonder how to tweak this properly
 
 
