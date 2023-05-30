@@ -1,2 +1,4 @@
+# note to reader: these requirements are ONLY if you are running the _no_modal variants of the files
+# if you are running the default variants (main.py, debugger.py, etc), you do not need to install these requirements
 openai
 tiktoken

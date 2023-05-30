@@ -2,33 +2,33 @@ import os
 import modal
 import ast
 
-stub = modal.Stub("smol-developer-v1")
+stub = modal.Stub("smol-developer-v1") # yes we are recommending using Modal by default, as it helps with deployment. see readme for why.
 generatedDir = "generated"
 openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
-openai_model = "gpt-4" # or 'gpt-3.5-turbo', but it's going to be worse at generating code so we strongly recommend gpt4. i know most people dont have access, we are working on a hosted version 
-openai_model_max_tokens = 2000 # i wonder how to tweak this properly
+openai_model = "gpt-4" # or 'gpt-3.5-turbo' # but it's going to be worse at generating code so we strongly recommend gpt4. i know most people dont have access, we are working on a hosted version 
+openai_model_max_tokens = 2000 # i wonder how to tweak this properly. we dont want it to be max length as it encourages verbosity of code. but too short and code also truncates suddenly.
 
 
 @stub.function(
     image=openai_image,
     secret=modal.Secret.from_dotenv(),
     retries=modal.Retries(
-        max_retries=3,
+        max_retries=5,
         backoff_coefficient=2.0,
         initial_delay=1.0,
     ),
-    # concurrency_limit=5,
-    # timeout=120,
+    concurrency_limit=5, # many users report rate limit issues (https://github.com/smol-ai/developer/issues/10) so we try to do this but it is still inexact. would like ideas on how to improve
+    timeout=120,
 )
 def generate_response(system_prompt, user_prompt, *args):
-    # IMPORTANT: Keep import statements here due to Modal container restrictions
+    # IMPORTANT: Keep import statements here due to Modal container restrictions https://modal.com/docs/guide/custom-container#additional-python-packages
     import openai
     import tiktoken
 
     def reportTokens(prompt):
         encoding = tiktoken.encoding_for_model(openai_model)
-        # print number of tokens in light gray, with first 10 characters of prompt in green
-        print("\033[37m" + str(len(encoding.encode(prompt))) + " tokens\033[0m" + " in prompt: " + "\033[92m" + prompt[:50] + "\033[0m")
+        # print number of tokens in light gray, with first 50 characters of prompt in green. if truncated, show that it is truncated
+        print("\033[37m" + str(len(encoding.encode(prompt))) + " tokens\033[0m" + " in prompt: " + "\033[92m" + prompt[:50] + "\033[0m" + ("..." if len(prompt) > 50 else ""))
         
 
     # Set up your OpenAI API credentials
@@ -112,10 +112,6 @@ def main(prompt, directory=generatedDir, file=None):
     print("hi its me, 🐣the smol developer🐣! you said you wanted:")
     # print the prompt in green color
     print("\033[92m" + prompt + "\033[0m")
-
-    # example prompt:
-    # a Chrome extension that, when clicked, opens a small window with a page where you can enter
-    # a prompt for reading the currently open page and generating some response from openai
 
     # call openai api with this prompt
     filepaths_string = generate_response.call(

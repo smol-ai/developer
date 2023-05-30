@@ -1,11 +1,11 @@
 .env
 __pycache__
 .vscode
+.idea
+/.idea/
+
 # Ignore everything in the generated directory
 /generated/*
 
-# Don't ignore .png files in the generated directory
-!/generated/*.png
-
-.idea
-/.idea/
+# Don't ignore .gitkeep files in the generated directory
+!/generated/.gitkeep
