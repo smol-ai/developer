@@ -2,7 +2,7 @@ import sys
 import os
 import ast
 from time import sleep
-
+from utils import clean_dir
 generatedDir = "generated"
 openai_model = "gpt-4"  # or 'gpt-3.5-turbo'
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
@@ -203,31 +203,6 @@ def write_file(filename, filecode, directory):
     with open(file_path, "w") as file:
         # Write content to the file
         file.write(filecode)
-
-
-def clean_dir(directory):
-    extensions_to_skip = [
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".gif",
-        ".bmp",
-        ".svg",
-        ".ico",
-        ".tif",
-        ".tiff",
-    ]  # Add more extensions if needed
-
-    # Check if the directory exists
-    if os.path.exists(directory):
-        # If it does, iterate over all files and directories
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                _, extension = os.path.splitext(file)
-                if extension not in extensions_to_skip:
-                    os.remove(os.path.join(root, file))
-    else:
-        os.makedirs(directory, exist_ok=True)
 
 
 if __name__ == "__main__":

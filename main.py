@@ -1,6 +1,7 @@
 import os
 import modal
 import ast
+from utils import clean_dir
 
 stub = modal.Stub("smol-developer-v1") # yes we are recommending using Modal by default, as it helps with deployment. see readme for why.
 generatedDir = "generated"
@@ -197,17 +198,3 @@ def write_file(filename, filecode, directory):
         # Write content to the file
         file.write(filecode)
 
-
-def clean_dir(directory):
-    extensions_to_skip = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']  # Add more extensions if needed
-
-    # Check if the directory exists
-    if os.path.exists(directory):
-        # If it does, iterate over all files and directories
-        for dirpath, _, filenames in os.walk(directory):
-            for filename in filenames:
-                _, extension = os.path.splitext(filename)
-                if extension not in extensions_to_skip:
-                    os.remove(os.path.join(dirpath, filename))
-    else:
-        os.makedirs(directory, exist_ok=True)
