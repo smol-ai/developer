@@ -229,12 +229,28 @@ def clean_dir(directory):
     else:
         os.makedirs(directory, exist_ok=True)
 
+def parse_args():
+    # putting import inside so that code can be moved to saperate files and we dont keep the import at top of this file
+    import argparse
+    # Create the argument parser
+    parser = argparse.ArgumentParser(description='Smol Developer Arg Parser')
+
+    # Add the "--prompt" argument with the "-p" shortcut
+    parser.add_argument('--prompt', '-p', type=str, help='The prompt message')
+
+    # Add the "--directory" argument with the "-d" shortcut
+    parser.add_argument('--directory', '-d', default=generatedDir, type=str, help='The directory path to put generated files')
+
+    # Add the "--file" argument with the "-d" shortcut
+    parser.add_argument('--file', '-f',required=False, type=str, help='The file path to work on')
+    # Parse the arguments without raising an error for unrecognized arguments
+    args = parser.parse_args()
+
+    return args 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Please provide a prompt")
-        sys.exit(1)
-    prompt = sys.argv[1]
-    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
-    file = sys.argv[3] if len(sys.argv) > 3 else None
-    main(prompt, directory, file)
+    args=parse_args()
+    prompt = args.prompt
+    directory = args.directory
+    filePath= args.file 
+    main(prompt, directory, filePath)
