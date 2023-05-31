@@ -4,8 +4,10 @@ import ast
 from time import sleep
 
 generatedDir = "generated"
-openai_model = "gpt-4"  # or 'gpt-3.5-turbo'
+# openai_model = "gpt-4"  # or 'gpt-3.5-turbo'
+openai_model = "gpt-3.5-turbo"  # or 'gpt-3.5-turbo'
 openai_model_max_tokens = 2000  # i wonder how to tweak this properly
+
 
 def generate_response(system_prompt, user_prompt, *args):
     import openai
@@ -199,10 +201,11 @@ def write_file(filename, filecode, directory):
     dir = os.path.dirname(file_path)
     os.makedirs(dir, exist_ok=True)
 
-    # Open the file in write mode
-    with open(file_path, "w") as file:
-        # Write content to the file
-        file.write(filecode)
+    # if file_path does not end with "/"
+    if not file_path.endswith("/"):
+        with open(file_path, "w") as file:
+            # Write content to the file
+            file.write(filecode)
 
 
 def clean_dir(directory):
