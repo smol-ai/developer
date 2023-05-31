@@ -231,10 +231,27 @@ def clean_dir(directory):
 
 
 if __name__ == "__main__":
+
+    # Check for arguments
     if len(sys.argv) < 2:
-        print("Please provide a prompt")
-        sys.exit(1)
-    prompt = sys.argv[1]
+
+        # Looks like we don't have a prompt. Check if prompt.md exists
+        if not os.path.exists("prompt.md"):
+
+            # Still no? Then we can't continue
+            print("Please provide a prompt")
+            sys.exit(1)
+
+        # Still here? Assign the prompt file name to prompt
+        prompt = "prompt.md"
+
+    else:
+        # Set prompt to the first argument
+        prompt = sys.argv[1]
+
+    # Pull everything else as normal
     directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
     file = sys.argv[3] if len(sys.argv) > 3 else None
+
+    # Run the main function
     main(prompt, directory, file)
