@@ -2,17 +2,15 @@ import sys
 import os
 import ast
 from time import sleep
-
-generatedDir = "generated"
-openai_model = "gpt-4"  # or 'gpt-3.5-turbo'
-openai_model_max_tokens = 2000  # i wonder how to tweak this properly
+from utils import clean_dir
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
 
 def generate_response(system_prompt, user_prompt, *args):
     import openai
     import tiktoken
 
     def reportTokens(prompt):
-        encoding = tiktoken.encoding_for_model(openai_model)
+        encoding = tiktoken.encoding_for_model(DEFAULT_MODEL)
         # print number of tokens in light gray, with first 10 characters of prompt in green
         print(
             "\033[37m"
@@ -40,9 +38,9 @@ def generate_response(system_prompt, user_prompt, *args):
         role = "user" if role == "assistant" else "assistant"
 
     params = {
-        "model": openai_model,
+        "model": DEFAULT_MODEL,
         "messages": messages,
-        "max_tokens": openai_model_max_tokens,
+        "max_tokens": DEFAULT_MAX_TOKENS,
         "temperature": 0,
     }
 
@@ -105,7 +103,7 @@ def generate_file(
     return filename, filecode
 
 
-def main(prompt, directory=generatedDir, file=None):
+def main(prompt, directory=DEFAULT_DIR, file=None):
     # read file from prompt if it ends in a .md filetype
     if prompt.endswith(".md"):
         with open(prompt, "r") as promptfile:
@@ -203,31 +201,6 @@ def write_file(filename, filecode, directory):
     with open(file_path, "w") as file:
         # Write content to the file
         file.write(filecode)
-
-
-def clean_dir(directory):
-    extensions_to_skip = [
-        ".png",
-        ".jpg",
-        ".jpeg",
-        ".gif",
-        ".bmp",
-        ".svg",
-        ".ico",
-        ".tif",
-        ".tiff",
-    ]  # Add more extensions if needed
-
-    # Check if the directory exists
-    if os.path.exists(directory):
-        # If it does, iterate over all files and directories
-        for root, dirs, files in os.walk(directory):
-            for file in files:
-                _, extension = os.path.splitext(file)
-                if extension not in extensions_to_skip:
-                    os.remove(os.path.join(root, file))
-    else:
-        os.makedirs(directory, exist_ok=True)
 
 
 if __name__ == "__main__":
