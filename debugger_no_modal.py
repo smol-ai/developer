@@ -1,8 +1,6 @@
 import sys
 import os
-
-generatedDir = "generated"
-
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, EXTENSION_TO_SKIP
 
 def read_file(filename):
     with open(filename, "r") as file:
@@ -39,7 +37,7 @@ def walk_directory(directory):
     return code_contents
 
 
-def main(prompt, directory=generatedDir, model="gpt-3.5-turbo"):
+def main(prompt, directory=DEFAULT_DIR, model="gpt-3.5-turbo"):
     code_contents = walk_directory(directory)
 
     # Now, `code_contents` is a dictionary that contains the content of all your non-image files
