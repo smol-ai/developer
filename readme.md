@@ -183,6 +183,8 @@ export OPENAI_API_KEY=sk-xxxxxx # your openai api key here)
 python main_no_modal.py YOUR_PROMPT_HERE
 ```
 
+If no command line argument is given, **and** the file `prompt.md` exists, the main function will automatically use the `prompt.md` file. All other command line arguments are left as default. *this is handy for those using the "run" function on a `venv` setup in PyCharm for Windows, where no opportunity is given to enter command line arguments. Thanks [@danmenzies](https://github.com/smol-ai/developer/pull/55)* 
+
 ## usage: smol debugger
 
 *this is a beta feature, very very MVP, just a proof of concept really*
