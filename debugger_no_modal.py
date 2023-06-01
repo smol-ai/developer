@@ -37,7 +37,7 @@ def walk_directory(directory):
     return code_contents
 
 
-def main(prompt, directory=DEFAULT_DIR, model="gpt-3.5-turbo"):
+def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL):
     code_contents = walk_directory(directory)
 
     # Now, `code_contents` is a dictionary that contains the content of all your non-image files
@@ -62,7 +62,7 @@ def main(prompt, directory=DEFAULT_DIR, model="gpt-3.5-turbo"):
     print("\033[96m" + res + "\033[0m")
 
 
-def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
+def generate_response(system_prompt, user_prompt, model=DEFAULT_MODEL, *args):
     import openai
 
     # Set up your OpenAI API credentials
@@ -98,5 +98,5 @@ if __name__ == "__main__":
         print("Please provide a prompt")
         sys.exit(1)
     prompt = sys.argv[1]
-    model = sys.argv[2] if len(sys.argv) > 2 else "gpt-3.5-turbo"
+    model = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_MODEL
     main(prompt, model)
