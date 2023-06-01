@@ -223,7 +223,7 @@ if __name__ == "__main__":
         prompt = sys.argv[1]
 
     # Pull everything else as normal
-    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
+    directory = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_DIR
     file = sys.argv[3] if len(sys.argv) > 3 else None
 
     # Run the main function
