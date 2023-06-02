@@ -6,11 +6,8 @@ FROM python:3.9-slim-buster
 # Sets the working directory in the Docker container. Any command that follows in the Dockerfile will be run in this directory
 WORKDIR /app
 
-# Copies the requirements.txt file from your project to the working directory in the Docker img
-COPY requirements.txt .
-
-# Copies your .env file from your project to the working directory in the Docker img
-COPY .env .
+# Copies the requirements.txt and .env file from your project to the working directory in the Docker img
+COPY requirements.txt .env* ./
 
 # Runs pip install command in your Docker image to install Python dependencies listed in your requirements.txt file
 RUN pip install -r requirements.txt
