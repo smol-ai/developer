@@ -8,5 +8,9 @@ __pycache__
 # Ignore everything in the generated directory
 /generated/*
 
+# Ignore the locally persisted chromadb
+.chroma_db/
+
 # Don't ignore .gitkeep files in the generated directory
 !/generated/.gitkeep
+
