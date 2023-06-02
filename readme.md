@@ -239,7 +239,7 @@ Here are the steps to use the devcontainer:
 2. When prompted to "Reopen in Container", choose "Reopen in Container". This will start the process of building the devcontainer defined by the `Dockerfile` and `.devcontainer.json` in the `.devcontainer` directory.
 3. Wait for the build to finish. The first time will be a bit longer as it downloads and builds everything. Future loads will be much faster.
 4. Once the build is finished, the VS Code window will reload and you are now working inside the devcontainer.
-
+5. Note that you will need to use the no-modal version with the provided dockerfile (i.e. `python main_no_modal.py`).
 
 <details>
 <summary> Benefits of a Dev Container </summary>
