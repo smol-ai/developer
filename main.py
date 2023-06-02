@@ -3,6 +3,10 @@ import modal
 import ast
 from utils import clean_dir
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 stub = modal.Stub("smol-developer-v1") # yes we are recommending using Modal by default, as it helps with deployment. see readme for why.
 openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
