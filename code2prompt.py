@@ -1,8 +1,8 @@
 import modal
 import os
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, EXTENSION_TO_SKIP
 
 stub = modal.Stub("smol-codetoprompt-v1")
-generatedDir = "generated"
 openai_image = modal.Image.debian_slim().pip_install("openai")
 
 
@@ -12,11 +12,10 @@ def read_file(filename):
         return file.read()
 
 def walk_directory(directory):
-    image_extensions = ['.png', '.jpg', '.jpeg', '.gif', '.bmp', '.svg', '.ico', '.tif', '.tiff']
     code_contents = {}
     for root, dirs, files in os.walk(directory):
         for file in files:
-            if not any(file.endswith(ext) for ext in image_extensions):
+            if not any(file.endswith(ext) for ext in EXTENSION_TO_SKIP):
                 try:
                     relative_filepath = os.path.relpath(os.path.join(root, file), directory)
                     code_contents[relative_filepath] = read_file(os.path.join(root, file))
@@ -27,7 +26,7 @@ def walk_directory(directory):
 
 
 @stub.local_entrypoint()
-def main(prompt=None, directory="generated", model="gpt-3.5-turbo"):
+def main(prompt=None, directory=DEFAULT_DIR, model=DEFAULT_MODEL):
   code_contents = walk_directory(directory)
 
   # Now, `code_contents` is a dictionary that contains the content of all your non-image files
@@ -53,7 +52,7 @@ def main(prompt=None, directory="generated", model="gpt-3.5-turbo"):
     concurrency_limit=5,
     timeout=120,
 )
-def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
+def generate_response(system_prompt, user_prompt, model=DEFAULT_MODEL, *args):
     import openai
 
     # Set up your OpenAI API credentials

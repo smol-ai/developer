@@ -2,17 +2,15 @@ import sys
 import os
 import ast
 from time import sleep
-
-generatedDir = "generated"
-openai_model = "gpt-4"  # or 'gpt-3.5-turbo'
-openai_model_max_tokens = 2000  # i wonder how to tweak this properly
+from utils import clean_dir
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
 
 def generate_response(system_prompt, user_prompt, *args):
     import openai
     import tiktoken
 
     def reportTokens(prompt):
-        encoding = tiktoken.encoding_for_model(openai_model)
+        encoding = tiktoken.encoding_for_model(DEFAULT_MODEL)
         # print number of tokens in light gray, with first 10 characters of prompt in green
         print(
             "\033[37m"
@@ -40,9 +38,9 @@ def generate_response(system_prompt, user_prompt, *args):
         role = "user" if role == "assistant" else "assistant"
 
     params = {
-        "model": openai_model,
+        "model": DEFAULT_MODEL,
         "messages": messages,
-        "max_tokens": openai_model_max_tokens,
+        "max_tokens": DEFAULT_MAX_TOKENS,
         "temperature": 0,
     }
 
@@ -105,7 +103,7 @@ def generate_file(
     return filename, filecode
 
 
-def main(prompt, directory=generatedDir, file=None):
+def main(prompt, directory=DEFAULT_DIR, file=None):
     # read file from prompt if it ends in a .md filetype
     if prompt.endswith(".md"):
         with open(prompt, "r") as promptfile:
@@ -203,8 +201,7 @@ def write_file(filename, filecode, directory):
     with open(file_path, "w") as file:
         # Write content to the file
         file.write(filecode)
-
-
+        
 def clean_dir(directory):
     extensions_to_skip = [
         ".png",
@@ -236,7 +233,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Smol Developer Arg Parser')
 
     # Add the "--prompt" argument with the "-p" shortcut
-    parser.add_argument('--prompt', '-p', type=str, help='The prompt message')
+    parser.add_argument('--prompt', '-p', default="prompt.md", type=str, help='The prompt message')
 
     # Add the "--directory" argument with the "-d" shortcut
     parser.add_argument('--directory', '-d', default=generatedDir, type=str, help='The directory path to put generated files')
@@ -251,6 +248,12 @@ def parse_args():
 if __name__ == "__main__":
     args=parse_args()
     prompt = args.prompt
+    
+    if prompt.endswith(".md"):
+        if not os.path.exists(prompt):
+            print("Please provide a prompt")
+                sys.exit(1)
+              
     directory = args.directory
     filePath= args.file 
     main(prompt, directory, filePath)
