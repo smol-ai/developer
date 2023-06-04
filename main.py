@@ -5,7 +5,7 @@ from utils import clean_dir
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
 
 stub = modal.Stub("smol-developer-v1") # yes we are recommending using Modal by default, as it helps with deployment. see readme for why.
-openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
+openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken", "promptlayer")
 
 @stub.function(
     image=openai_image,
@@ -20,8 +20,9 @@ openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
 )
 def generate_response(model, system_prompt, user_prompt, *args):
     # IMPORTANT: Keep import statements here due to Modal container restrictions https://modal.com/docs/guide/custom-container#additional-python-packages
-    import openai
     import tiktoken
+    import promptlayer
+    openai = promptlayer.openai
 
     def reportTokens(prompt):
         encoding = tiktoken.encoding_for_model(model)
@@ -29,8 +30,8 @@ def generate_response(model, system_prompt, user_prompt, *args):
         print("\033[37m" + str(len(encoding.encode(prompt))) + " tokens\033[0m" + " in prompt: " + "\033[92m" + prompt[:50] + "\033[0m" + ("..." if len(prompt) > 50 else ""))
         
 
-    # Set up your OpenAI API credentials
-    openai.api_key = os.environ["OPENAI_API_KEY"]
+    # # Set up your OpenAI API credentials
+    # openai.api_key = os.environ["OPENAI_API_KEY"]
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -144,7 +145,7 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
 
             # understand shared dependencies
             shared_dependencies = generate_response.call(model, 
-                """You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
+                f"""You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
                 
             In response to the user's prompt:
 
