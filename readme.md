@@ -172,7 +172,7 @@ modal run main.py --prompt prompt.md  --file popup.js
 
 ### smol dev without modal.com
 
-By default, `main.py` uses Modal, beacuse it provides a nice upgrade path to a hosted experience (coming soon, so you can try it out without needing GPT4 key access).
+By default, `main.py` uses Modal, because it provides a nice upgrade path to a hosted experience (coming soon, so you can try it out without needing GPT4 key access).
 
 However if you want to just run it on your own machine, you can run smol dev w/o Modal following these instructions:
 
