@@ -1,6 +1,7 @@
 import sys
 import os
 import ast
+import json
 from time import sleep
 from utils import clean_dir
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
@@ -128,11 +129,15 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
     """,
         prompt,
     )
+
     print(filepaths_string)
     # parse the result into a python list
+    
     list_actual = []
     try:
         list_actual = ast.literal_eval(filepaths_string)
+
+        filtered_data = [value for value in list_actual if not value.endswith('/')]
 
         # if shared_dependencies.md is there, read it in, else set it to None
         shared_dependencies = None
@@ -175,7 +180,7 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
             # write shared dependencies as a md file inside the generated directory
             write_file("shared_dependencies.md", shared_dependencies, directory)
 
-            for name in list_actual:
+            for name in filtered_data:
                 filename, filecode = generate_file(
                     name,
                     filepaths_string=filepaths_string,
@@ -189,6 +194,7 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
 
 
 def write_file(filename, filecode, directory):
+
     # Output the filename in blue color
     print("\033[94m" + filename + "\033[0m")
     print(filecode)
