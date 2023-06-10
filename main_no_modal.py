@@ -189,8 +189,8 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
                 )
                 write_file(filename, filecode, directory)
 
-    except ValueError:
-        print("Failed to parse result: " + result)
+    except ValueError as error:
+        print("Failed to parse result:", str(error))
 
 
 def write_file(filename, filecode, directory):
