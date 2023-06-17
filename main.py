@@ -61,7 +61,7 @@ def generate_response(model, system_prompt, user_prompt, *args):
 
 
 @stub.function()
-def generate_file(filename, model=DEFAULT_MODEL, filepaths_string=None, shared_dependencies=None, prompt=None, generatedFilesContent=None):
+def generate_file(filename, model=DEFAULT_MODEL, filepaths_string=None, shared_dependencies=None, prompt=None, generated_files_content=None):
     # call openai api with this prompt
     filecode = generate_response.call(model, 
         f"""You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
@@ -71,7 +71,7 @@ def generate_file(filename, model=DEFAULT_MODEL, filepaths_string=None, shared_d
     the files we have decided to generate are: {filepaths_string}
 
     the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}""" +
-    (f"already generated files are:\n {generatedFilesContent}" if (USE_FULL_PROJECT_PROMPT and generatedFilesContent) else "") +
+    (f"already generated files are:\n {generated_files_content}" if (USE_FULL_PROJECT_PROMPT and generated_files_content) else "") +
         f"""
     only write valid code for the given filepath and file type, and return only the code.
     do not add any other explanation, only return valid code for that file type.
@@ -168,7 +168,7 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
             generated_files_content = ""
             # Iterate over generated files and write them to the specified directory
             for filename, filecode in generate_file.map(
-                list_actual, order_outputs=False, kwargs=dict(model=model, filepaths_string=filepaths_string, shared_dependencies=shared_dependencies, prompt=prompt)
+                list_actual, order_outputs=False, kwargs=dict(model=model, filepaths_string=filepaths_string, shared_dependencies=shared_dependencies, prompt=prompt, generated_files_content=generated_files_content)
             ):
                 write_file(filename, filecode, directory)
                 generated_files_content += f"{directory}/{filename}\n"

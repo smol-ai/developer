@@ -63,7 +63,7 @@ def generate_response(system_prompt, user_prompt, *args):
 
 
 def generate_file(
-    filename, filepaths_string=None, shared_dependencies=None, prompt=None, generatedFilesContent=None
+    filename, filepaths_string=None, shared_dependencies=None, prompt=None, generated_files_content=None
 ):
     # call openai api with this prompt
     filecode = generate_response(
@@ -74,7 +74,7 @@ def generate_file(
     the files we have decided to generate are: {filepaths_string}
 
     the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}""" +
-    (f"already generated files are:\n {generatedFilesContent}" if (USE_FULL_PROJECT_PROMPT and generatedFilesContent) else "") +
+    (f"already generated files are:\n {generated_files_content}" if (USE_FULL_PROJECT_PROMPT and generated_files_content) else "") +
         f"""
     only write valid code for the given filepath and file type, and return only the code.
     do not add any other explanation, only return valid code for that file type.
@@ -183,6 +183,7 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
                     filepaths_string=filepaths_string,
                     shared_dependencies=shared_dependencies,
                     prompt=prompt,
+                    generated_files_content=generated_files_content,
                 )
                 write_file(filename, filecode, directory)
                 generated_files_content += f"{directory}/{filename}\n"
