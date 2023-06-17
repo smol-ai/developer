@@ -1,8 +1,9 @@
 import os
+import re
 import modal
 import ast
 from utils import clean_dir
-from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, USE_FULL_PROJECT_PROMPT
 
 stub = modal.Stub("smol-developer-v1") # yes we are recommending using Modal by default, as it helps with deployment. see readme for why.
 openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
@@ -60,17 +61,18 @@ def generate_response(model, system_prompt, user_prompt, *args):
 
 
 @stub.function()
-def generate_file(filename, model=DEFAULT_MODEL, filepaths_string=None, shared_dependencies=None, prompt=None):
+def generate_file(filename, model=DEFAULT_MODEL, filepaths_string=None, shared_dependencies=None, prompt=None, generatedFilesContent=None):
     # call openai api with this prompt
     filecode = generate_response.call(model, 
         f"""You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
-        
+
     the app is: {prompt}
 
     the files we have decided to generate are: {filepaths_string}
 
-    the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}
-    
+    the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}""" +
+    (f"already generated files are:\n {generatedFilesContent}" if (USE_FULL_PROJECT_PROMPT and generatedFilesContent) else "") +
+        f"""
     only write valid code for the given filepath and file type, and return only the code.
     do not add any other explanation, only return valid code for that file type.
     """,
@@ -97,7 +99,7 @@ def generate_file(filename, model=DEFAULT_MODEL, filepaths_string=None, shared_d
     """,
     )
 
-    return filename, filecode
+    return filename, get_code_from_string(filecode)
 
 
 @stub.local_entrypoint()
@@ -163,17 +165,33 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
             print(shared_dependencies)
             # write shared dependencies as a md file inside the generated directory
             write_file("shared_dependencies.md", shared_dependencies, directory)
-            
+            generated_files_content = ""
             # Iterate over generated files and write them to the specified directory
             for filename, filecode in generate_file.map(
                 list_actual, order_outputs=False, kwargs=dict(model=model, filepaths_string=filepaths_string, shared_dependencies=shared_dependencies, prompt=prompt)
             ):
                 write_file(filename, filecode, directory)
+                generated_files_content += f"{directory}/{filename}\n"
+                generated_files_content += "\n"
+                generated_files_content += filecode
+                generated_files_content += "\n"
 
 
     except ValueError:
         print("Failed to parse result")
 
+# sometimes GPT-3.5 still returns some words around the content of the file
+# example:
+# # Makefile
+# ```makefile
+# contents
+# ````
+def get_code_from_string(input_string):
+    match = re.search(r'```[^\n]+?\n([\s\S]+?)\n```', input_string)
+    if match:
+        return match.group(1)
+    else:
+        return input_string
 
 def write_file(filename, filecode, directory):
     # Output the filename in blue color

@@ -2,6 +2,15 @@ import os
 
 EXTENSION_TO_SKIP = [".png",".jpg",".jpeg",".gif",".bmp",".svg",".ico",".tif",".tiff"]
 DEFAULT_DIR = "generated"
+
+try:
+    USE_FULL_PROJECT_PROMPT = bool(os.environ["USE_FULL_PROJECT_PROMPT"])
+except KeyError:
+    # If enabled for each file generation prompt we will include all the files generated before
+    # It helps to make code much more consistent
+    # But requires at least 16k context model even for a small project
+    USE_FULL_PROJECT_PROMPT = False
+
 # https://platform.openai.com/docs/models/gpt-4
 try:
     DEFAULT_MODEL = os.environ["OPENAI_DEFAULT_MODEL"]
