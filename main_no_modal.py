@@ -202,7 +202,7 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
 # contents
 # ````
 def get_code_from_string(input_string):
-    match = re.search(r'```[^\n]+?\n([\s\S]+?)\n```', input_string)
+    match = re.search(r'```[^\n]*?\n([\s\S]+?)\n```', input_string)
     if match:
         return match.group(1)
     else:
