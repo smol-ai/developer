@@ -119,6 +119,9 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
     
     only list the filepaths you would write, and return them as a python list of strings. 
     do not add any other explanation, only return a python list of strings.
+
+    Example output:
+    ["index.html", "style.css", "script.js"]
     """,
         prompt,
     )
