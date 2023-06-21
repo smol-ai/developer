@@ -7,7 +7,7 @@ from utils import clean_dir
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, USE_FULL_PROJECT_PROMPT
 
 def generate_response(system_prompt, user_prompt, *args):
-    import genstudiopy
+    import openai
     import tiktoken
 
     def reportTokens(prompt):
@@ -24,7 +24,7 @@ def generate_response(system_prompt, user_prompt, *args):
         )
 
     # Set up your OpenAI API credentials
-    # genstudiopy.api_key = os.environ["OPENAI_API_KEY"]
+    openai.api_key = os.environ["OPENAI_API_KEY"]
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -51,7 +51,7 @@ def generate_response(system_prompt, user_prompt, *args):
     keep_trying = True
     while keep_trying:
         try:
-            response = genstudiopy.ChatCompletion.create(**params)
+            response = openai.ChatCompletion.create(**params)
             keep_trying = False
         except Exception as e:
             # e.g. when the API is too busy, we don't want to fail everything
