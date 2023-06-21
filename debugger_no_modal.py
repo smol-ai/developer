@@ -1,9 +1,8 @@
 import sys
 import os
-
-generatedDir = "generated"
-
-
+from time import sleep
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, EXTENSION_TO_SKIP
+import argparse
 def read_file(filename):
     with open(filename, "r") as file:
         return file.read()
@@ -39,7 +38,10 @@ def walk_directory(directory):
     return code_contents
 
 
-def main(prompt, directory=generatedDir, model="gpt-3.5-turbo"):
+def main(args):
+    prompt=args.prompt
+    directory= args.directory
+    model=args.model
     code_contents = walk_directory(directory)
 
     # Now, `code_contents` is a dictionary that contains the content of all your non-image files
@@ -64,7 +66,7 @@ def main(prompt, directory=generatedDir, model="gpt-3.5-turbo"):
     print("\033[96m" + res + "\033[0m")
 
 
-def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
+def generate_response(system_prompt, user_prompt, model=DEFAULT_MODEL, *args):
     import openai
 
     # Set up your OpenAI API credentials
@@ -88,7 +90,16 @@ def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
     }
 
     # Send the API request
-    response = openai.ChatCompletion.create(**params)
+    keep_trying = True
+    while keep_trying:
+        try:
+            response = openai.ChatCompletion.create(**params)
+            keep_trying = False
+        except Exception as e:
+            # e.g. when the API is too busy, we don't want to fail everything
+            print("Failed to generate response. Error: ", e)
+            sleep(30)
+            print("Retrying...")
 
     # Get the reply from the API response
     reply = response.choices[0]["message"]["content"]
@@ -96,9 +107,23 @@ def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Please provide a prompt")
-        sys.exit(1)
-    prompt = sys.argv[1]
-    model = sys.argv[2] if len(sys.argv) > 2 else "gpt-3.5-turbo"
-    main(prompt, model)
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "prompt",
+        help="The prompt to use for the AI. This should be the error message or issue you are facing.",
+        
+    )
+    parser.add_argument(
+        "--directory",
+        "-d",
+        help="The directory to use for the AI. This should be the directory containing the files you want to debug.",
+        default=DEFAULT_DIR,
+    )
+    parser.add_argument(
+        "--model",
+        "-m",
+        help="The model to use for the AI. This should be the model ID of the model you want to use.",
+        default=DEFAULT_MODEL,
+    )
+    args = parser.parse_args()
+    main(args)

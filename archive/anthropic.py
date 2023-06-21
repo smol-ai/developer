@@ -2,6 +2,7 @@ import sys
 import os
 import modal
 import ast
+from utils import clean_dir
 
 stub = modal.Stub("smol-developer-v1-anthropic")
 generatedDir = "generated"
@@ -184,20 +185,3 @@ def write_file(filename, filecode):
     with open(generatedDir + "/" + filename, "w") as file:
         # Write content to the file
         file.write(filecode)
-
-
-def clean_dir():
-    import shutil
-
-    extensions_to_skip = ['.png', '.jpg', '.jpeg']  # Add more extensions if needed
-
-    # Check if the directory exists
-    if os.path.exists(generatedDir):
-        # If it does, iterate over all files and directories
-        for root, dirs, files in os.walk(generatedDir):
-            for file in files:
-                _, extension = os.path.splitext(file)
-                if extension not in extensions_to_skip:
-                    os.remove(os.path.join(root, file))
-    else:
-        os.makedirs(generatedDir, exist_ok=True)
