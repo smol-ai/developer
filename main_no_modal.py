@@ -5,6 +5,7 @@ from time import sleep
 from utils import clean_dir
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
 
+
 def generate_response(system_prompt, user_prompt, *args):
     import openai
     import tiktoken
@@ -197,10 +198,11 @@ def write_file(filename, filecode, directory):
     dir = os.path.dirname(file_path)
     os.makedirs(dir, exist_ok=True)
 
-    # Open the file in write mode
-    with open(file_path, "w") as file:
-        # Write content to the file
-        file.write(filecode)
+    # if file_path does not end with "/"
+    if not file_path.endswith("/"):
+        with open(file_path, "w") as file:
+            # Write content to the file
+            file.write(filecode)
 
 
 if __name__ == "__main__":
