@@ -41,9 +41,11 @@ def generate_response(system_prompt, user_prompt, *args):
     params = {
         "model": DEFAULT_MODEL,
         "messages": messages,
-        "max_tokens": DEFAULT_MAX_TOKENS,
         "temperature": 0,
     }
+
+    if DEFAULT_MAX_TOKENS != 0:
+        params.max_tokens = DEFAULT_MAX_TOKENS
 
     # Send the API request
     keep_trying = True

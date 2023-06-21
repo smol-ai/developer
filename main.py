@@ -48,9 +48,11 @@ def generate_response(model, system_prompt, user_prompt, *args):
     params = {
         "model": model,
         "messages": messages,
-        "max_tokens": DEFAULT_MAX_TOKENS,
         "temperature": 0,
     }
+
+    if DEFAULT_MAX_TOKENS != 0:
+        params.max_tokens = DEFAULT_MAX_TOKENS
 
     # Send the API request
     response = openai.ChatCompletion.create(**params)
