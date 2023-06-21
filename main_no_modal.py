@@ -201,30 +201,59 @@ def write_file(filename, filecode, directory):
     with open(file_path, "w") as file:
         # Write content to the file
         file.write(filecode)
+        
+def clean_dir(directory):
+    extensions_to_skip = [
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".bmp",
+        ".svg",
+        ".ico",
+        ".tif",
+        ".tiff",
+    ]  # Add more extensions if needed
 
+    # Check if the directory exists
+    if os.path.exists(directory):
+        # If it does, iterate over all files and directories
+        for root, dirs, files in os.walk(directory):
+            for file in files:
+                _, extension = os.path.splitext(file)
+                if extension not in extensions_to_skip:
+                    os.remove(os.path.join(root, file))
+    else:
+        os.makedirs(directory, exist_ok=True)
+
+def parse_args():
+    # putting import inside so that code can be moved to saperate files and we dont keep the import at top of this file
+    import argparse
+    # Create the argument parser
+    parser = argparse.ArgumentParser(description='Smol Developer Arg Parser')
+
+    # Add the "--prompt" argument with the "-p" shortcut
+    parser.add_argument('--prompt', '-p', default="prompt.md", type=str, help='The prompt message')
+
+    # Add the "--directory" argument with the "-d" shortcut
+    parser.add_argument('--directory', '-d', default=generatedDir, type=str, help='The directory path to put generated files')
+
+    # Add the "--file" argument with the "-d" shortcut
+    parser.add_argument('--file', '-f',required=False, type=str, help='The file path to work on')
+    # Parse the arguments without raising an error for unrecognized arguments
+    args = parser.parse_args()
+
+    return args 
 
 if __name__ == "__main__":
-
-    # Check for arguments
-    if len(sys.argv) < 2:
-
-        # Looks like we don't have a prompt. Check if prompt.md exists
-        if not os.path.exists("prompt.md"):
-
-            # Still no? Then we can't continue
+    args=parse_args()
+    prompt = args.prompt
+    
+    if prompt.endswith(".md"):
+        if not os.path.exists(prompt):
             print("Please provide a prompt")
-            sys.exit(1)
-
-        # Still here? Assign the prompt file name to prompt
-        prompt = "prompt.md"
-
-    else:
-        # Set prompt to the first argument
-        prompt = sys.argv[1]
-
-    # Pull everything else as normal
-    directory = sys.argv[2] if len(sys.argv) > 2 else DEFAULT_DIR
-    file = sys.argv[3] if len(sys.argv) > 3 else None
-
-    # Run the main function
-    main(prompt, directory, file)
+                sys.exit(1)
+              
+    directory = args.directory
+    filePath= args.file 
+    main(prompt, directory, filePath)
