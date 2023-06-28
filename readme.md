@@ -1,7 +1,10 @@
 # smol developer
 
-<a href="https://e2b-prod.vercel.app/agent/smol-developer">
-<img src="https://e2b-prod.vercel.app/api/badge"/>
+<a href="https://e2b-prod.vercel.app/agent/smol-developer" target="_blank" rel="noopener noreferrer">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://e2b-prod.vercel.app/api/badge_light">
+  <img alt="Deploy agent on e2b button" src="https://e2b-prod.vercel.app/api/badge"/>
+</picture>
 </a>
 
 ***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
