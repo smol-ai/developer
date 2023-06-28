@@ -1,9 +1,9 @@
 # smol developer
 
-<a href="https://e2b-prod.vercel.app/agent/smol-developer" target="_blank" rel="noopener noreferrer">
+<a href="https://app.e2b.dev/agent/smol-developer" target="_blank" rel="noopener noreferrer">
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://e2b-prod.vercel.app/api/badge_light">
-  <img alt="Deploy agent on e2b button" src="https://e2b-prod.vercel.app/api/badge"/>
+  <source media="(prefers-color-scheme: dark)" srcset="https://app.e2b.dev/api/badge_light">
+  <img alt="Deploy agent on e2b button" src="https://app.e2b.dev/api/badge"/>
 </picture>
 </a>
 
