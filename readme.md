@@ -1,5 +1,9 @@
 # smol developer
 
+<a href="https://e2b-prod.vercel.app/agent/smol-developer">
+<img src="https://e2b-prod.vercel.app/api/badge"/>
+</a>
+
 ***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
 
 > [Build the thing that builds the thing!](https://twitter.com/swyx/status/1657578738345979905) a `smol dev` for every dev in every situation
