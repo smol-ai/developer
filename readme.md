@@ -1,5 +1,12 @@
 # smol developer
 
+<a href="https://app.e2b.dev/agent/smol-developer" target="_blank" rel="noopener noreferrer">
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://app.e2b.dev/api/badge_light">
+  <img alt="Deploy agent on e2b button" src="https://app.e2b.dev/api/badge"/>
+</picture>
+</a>
+
 ***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
 
 > [Build the thing that builds the thing!](https://twitter.com/swyx/status/1657578738345979905) a `smol dev` for every dev in every situation
