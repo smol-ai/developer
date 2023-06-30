@@ -3,6 +3,12 @@ import os
 from time import sleep
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, EXTENSION_TO_SKIP
 import argparse
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+
 def read_file(filename):
     with open(filename, "r") as file:
         return file.read()

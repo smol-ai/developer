@@ -1,6 +1,10 @@
 import modal
 import os
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, EXTENSION_TO_SKIP
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 stub = modal.Stub("smol-codetoprompt-v1")
 openai_image = modal.Image.debian_slim().pip_install("openai")
