@@ -194,8 +194,14 @@ def write_file(filename, filecode, directory):
     print("\033[94m" + filename + "\033[0m")
     print(filecode)
 
-    file_path = directory + "/" + filename
+    file_path = os.path.join(directory, filename)
     dir = os.path.dirname(file_path)
+
+    # Check if the filename is actually a directory
+    if os.path.isdir(file_path):
+        print(f"Error: {filename} is a directory, not a file.")
+        return
+
     os.makedirs(dir, exist_ok=True)
 
     # if file_path does not end with "/"
