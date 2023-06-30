@@ -11,7 +11,7 @@
 
 > [Build the thing that builds the thing!](https://twitter.com/swyx/status/1657578738345979905) a `smol dev` for every dev in every situation
 
-this is a prototype of a "junior developer" agent (aka `smol dev`) that scaffolds an entire codebase out for you once you give it a product spec, but does not end the world or overpromise AGI. instead of making and maintaining specific, rigid, one-shot starters, like `create-react-app`, or `create-nextjs-app`, this is basically [`create-anything-app`](https://news.ycombinator.com/item?id=35942352) where you develop your scaffolding prompt in a tight loop with your smol dev.
+this is a prototype of a "junior developer" agent (aka `smol dev`) that scaffolds an entire codebase out for you once you give it a product spec, but does not end the world or overpromise AGI. Instead of making and maintaining specific, rigid, one-shot starters, like `create-react-app`, or `create-nextjs-app`, this is basically [`create-anything-app`](https://news.ycombinator.com/item?id=35942352) where you develop your scaffolding prompt in a tight loop with your smol dev.
 
 AI that is helpful, harmless, and honest is complemented by a codebase that is simple, safe, and smol - <200 lines of Python and Prompts, so this is easy to understand and customize.
 
@@ -63,7 +63,7 @@ Perhaps a higher order evolution of programming where you still need to be techn
 
 I'm actively seeking more examples, please PR yours! 
 
-sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
+sorry for the lack of examples, I know that is frustrating but I wasn't ready for so many of you lol
 
 ## major forks/alternatives
 
@@ -85,7 +85,7 @@ naturally generated with gpt4, like [we did for babyagi](https://twitter.com/swy
 
 > Please subscribe to https://latent.space/ for a fuller writeup and insights and reflections
 
-- **Markdown is all you need** - Markdown is the perfect way to prompt for whole program synthesis because it is easy to mix english and code (whether `variable_names` or entire \`\`\` code fenced code samples)
+- **Markdown is all you need** - Markdown is the perfect way to prompt for whole program synthesis because it is easy to mix English and code (whether `variable_names` or entire \`\`\` code fenced code samples)
   - turns out you can specify prompts in code in prompts and gpt4 obeys that to the letter
 - **Copy and paste programming**
   - teaching the program to understand how to code around a new API (Anthropic's API is after GPT3's knowledge cutoff) by just pasting in the `curl` input and output
@@ -111,7 +111,7 @@ naturally generated with gpt4, like [we did for babyagi](https://twitter.com/swy
 
 We were working on a Chrome Extension, which requires images to be generated, so we added some usecase specific code in there to skip destroying/regenerating them, that we haven't decided how to generalize.
 
-We dont have access to GPT4-32k, but if we did, we'd explore dumping entire API/SDK documentation into context.
+We don't have access to GPT4-32k, but if we did, we'd explore dumping entire API/SDK documentation into context.
 
 The feedback loop is very slow right now (`time` says about 2-4 mins to generate a program with GPT4, even with parallelization due to Modal (occasionally spiking higher)), but it's a safe bet that it will go down over time (see also "future directions" below).
 
@@ -131,7 +131,7 @@ Unfortunately this project also uses 3 other things:
   - `pip install -r requirements.txt`
   - `export OPENAI_API_KEY=sk-xxxxxx` (your openai api key here)
   - `python main_no_modal.py YOUR_PROMPT_HERE`
-- GPT-4 api (private beta) - this project now defaults to using `gpt-3.5-turbo` but it obviously wont be as good. we are working on a hosted version so you can try this out on our keys.
+- GPT-4 api (private beta) - this project now defaults to using `gpt-3.5-turbo` but it obviously won't be as good. we are working on a hosted version so you can try this out on our keys.
 - (for the demo project only) anthropic claude 100k context api (private beta) - not important unless you're exactly trying to repro my demo
 
 you'll have to adapt this code on a fork if you want to use it on other infra. please open issues/PRs and i'll happily highlight your fork here.
@@ -179,7 +179,7 @@ modal run main.py --prompt prompt.md  --file popup.js
 
 ### smol dev without modal.com
 
-By default, `main.py` uses Modal, beacuse it provides a nice upgrade path to a hosted experience (coming soon, so you can try it out without needing GPT4 key access).
+By default, `main.py` uses Modal, because it provides a nice upgrade path to a hosted experience (coming soon, so you can try it out without needing GPT4 key access).
 
 However if you want to just run it on your own machine, you can run smol dev w/o Modal following these instructions:
 
@@ -196,7 +196,7 @@ If no command line argument is given, **and** the file `prompt.md` exists, the m
 
 *this is a beta feature, very very MVP, just a proof of concept really*
 
-take the entire contents of the generated directory in context, feed in an error, get a response. this basically takes advantage of longer (32k-100k) context so we basically dont have to do any embedding of the source.
+take the entire contents of the generated directory in context, feed in an error, get a response. this basically takes advantage of longer (32k-100k) context so we basically don't have to do any embedding of the source.
 
 ```bash
 modal run debugger.py --prompt "Uncaught (in promise) TypeError: Cannot destructure property 'pageTitle' of '(intermediate value)' as it is undefined.    at init (popup.js:59:11)"
