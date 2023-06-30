@@ -3,6 +3,7 @@ import os
 import ast
 from time import sleep
 from utils import clean_dir
+from dotenv import load_dotenv
 from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
 
 
@@ -105,6 +106,9 @@ def generate_file(
 
 
 def main(prompt, directory=DEFAULT_DIR, file=None):
+    # load .env file
+    load_dotenv()
+
     # read file from prompt if it ends in a .md filetype
     if prompt.endswith(".md"):
         with open(prompt, "r") as promptfile:
