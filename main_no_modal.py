@@ -1,9 +1,10 @@
 import sys
 import os
+import re
 import ast
 from time import sleep
 from utils import clean_dir
-from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
+from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS, USE_FULL_PROJECT_PROMPT
 
 
 def generate_response(system_prompt, user_prompt, *args):
@@ -41,9 +42,11 @@ def generate_response(system_prompt, user_prompt, *args):
     params = {
         "model": DEFAULT_MODEL,
         "messages": messages,
-        "max_tokens": DEFAULT_MAX_TOKENS,
         "temperature": 0,
     }
+
+    if DEFAULT_MAX_TOKENS != 0:
+        params.max_tokens = DEFAULT_MAX_TOKENS
 
     # Send the API request
     keep_trying = True
@@ -63,7 +66,7 @@ def generate_response(system_prompt, user_prompt, *args):
 
 
 def generate_file(
-    filename, filepaths_string=None, shared_dependencies=None, prompt=None
+    filename, filepaths_string=None, shared_dependencies=None, prompt=None, generated_files_content=None
 ):
     # call openai api with this prompt
     filecode = generate_response(
@@ -73,8 +76,9 @@ def generate_file(
 
     the files we have decided to generate are: {filepaths_string}
 
-    the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}
-
+    the shared dependencies (like filenames and variable names) we have decided on are: {shared_dependencies}""" +
+    (f"already generated files are:\n {generated_files_content}" if (USE_FULL_PROJECT_PROMPT and generated_files_content) else "") +
+        f"""
     only write valid code for the given filepath and file type, and return only the code.
     do not add any other explanation, only return valid code for that file type.
     """,
@@ -101,7 +105,7 @@ def generate_file(
     """,
     )
 
-    return filename, filecode
+    return filename, get_code_from_string(filecode)
 
 
 def main(prompt, directory=DEFAULT_DIR, file=None):
@@ -175,19 +179,37 @@ def main(prompt, directory=DEFAULT_DIR, file=None):
             print(shared_dependencies)
             # write shared dependencies as a md file inside the generated directory
             write_file("shared_dependencies.md", shared_dependencies, directory)
-
+            generated_files_content = ""
             for name in list_actual:
                 filename, filecode = generate_file(
                     name,
                     filepaths_string=filepaths_string,
                     shared_dependencies=shared_dependencies,
                     prompt=prompt,
+                    generated_files_content=generated_files_content,
                 )
                 write_file(filename, filecode, directory)
+                generated_files_content += f"{directory}/{filename}\n"
+                generated_files_content += "\n"
+                generated_files_content += filecode
+                generated_files_content += "\n"
+
 
     except ValueError:
         print("Failed to parse result: " + result)
 
+# sometimes GPT-3.5 still returns some words around the content of the file
+# example:
+# # Makefile
+# ```makefile
+# contents
+# ````
+def get_code_from_string(input_string):
+    match = re.search(r'```[^\n]*?\n([\s\S]+?)\n```', input_string)
+    if match:
+        return match.group(1)
+    else:
+        return input_string
 
 def write_file(filename, filecode, directory):
     # Output the filename in blue color
