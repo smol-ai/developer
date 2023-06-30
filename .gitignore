@@ -9,5 +9,10 @@ venv/
 # Ignore everything in the generated directory
 /generated/*
 
+# Ignore the locally persisted chromadb
+.chroma_db/
+**/chroma-embeddings.parquet
+
 # Don't ignore .gitkeep files in the generated directory
 !/generated/.gitkeep
+
