@@ -1,5 +1,6 @@
 {
   "workspace": "generated",
-  "func_path": "benchmarks.py",
+  "entry_path": "benchmarks.py",
+  "home_path": "",
   "cutoff": 60
 }
