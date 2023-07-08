@@ -120,7 +120,11 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
     only list the filepaths you would write, and return them as a python list of strings. 
     do not add any other explanation, only return a python list of strings.
 
+
     Don't respond with description messages or helper messages. If you're going to list the file don't offer "here's a list" only list the filepaths
+
+    Example output:
+    ["index.html", "style.css", "script.js"]
     """,
         prompt,
     )
