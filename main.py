@@ -43,4 +43,4 @@ if __name__ == "__main__":
 
     print(prompt)
         
-    main(prompt=prompt, generate_folder_path=args.generate_folder_path, debug=args.debug)
+    main(prompt=prompt, generate_folder_path=args.generate_folder_path, debug=args.debug, model=args.model)
