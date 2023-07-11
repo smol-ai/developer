@@ -1,4 +1,5 @@
 import sys
+import time
 
 from smol_dev.prompts import plan, specify_file_paths, generate_code_sync
 from smol_dev.utils import generate_folder, write_file
@@ -16,9 +17,18 @@ def main(prompt, generate_folder_path="generated", debug=False, model: str = def
         print("--------shared_deps---------")
     with open(f"{generate_folder_path}/shared_deps.md", "wb") as f:
 
+        start_time = time.time()
         def stream_handler(chunk):
             f.write(chunk)
-            print("chunk", chunk)
+            if debug:
+                end_time = time.time()
+
+                sys.stdout.write("\r \033[93mChars streamed\033[0m: {}. \033[93mChars per second\033[0m: {:.2f}".format(stream_handler.count, stream_handler.count / (end_time - start_time)))
+                sys.stdout.flush()
+                stream_handler.count += len(chunk)
+
+        stream_handler.count = 0
+        stream_handler.onComplete = lambda x: sys.stdout.write("\033[0m\n") # remove the stdout line when streaming is complete
 
         shared_deps = plan(prompt, stream_handler, model=model)
     if debug:
@@ -41,13 +51,25 @@ def main(prompt, generate_folder_path="generated", debug=False, model: str = def
         file_path = f"{generate_folder_path}/{file_path}"  # just append prefix
         if debug:
             print(f"--------generate_code: {file_path} ---------")
-        code = generate_code_sync(prompt, shared_deps, file_path, model=model)
+
+        start_time = time.time()
+        def stream_handler(chunk):
+            if debug:
+                end_time = time.time()
+                sys.stdout.write("\r \033[93mChars streamed\033[0m: {}. \033[93mChars per second\033[0m: {:.2f}".format(stream_handler.count, stream_handler.count / (end_time - start_time)))
+                sys.stdout.flush()
+                stream_handler.count += len(chunk)
+        stream_handler.count = 0
+        stream_handler.onComplete = lambda x: sys.stdout.write("\033[0m\n") # remove the stdout line when streaming is complete
+        code = generate_code_sync(prompt, shared_deps, file_path, stream_handler, model=model)
         if debug:
             print(code)
         if debug:
             print(f"--------generate_code: {file_path} ---------")
         # create file with code content
         write_file(file_path, code)
+        
+    print("--------smol dev done!---------")
 
 
 # for local testing
