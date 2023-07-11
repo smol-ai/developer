@@ -1,0 +1,39 @@
+/* CSS Styles for the Pong Game App */
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+}
+
+#gameArea {
+  background-color: black;
+  height: 400px;
+  width: 400px;
+  position: relative;
+}
+
+#playerPaddle, #aiPaddle {
+  position: absolute;
+  background-color: yellow;
+  width: 10px;
+  height: 100px;
+}
+
+#playerPaddle {
+  left: 0;
+}
+
+#aiPaddle {
+  right: 0;
+}
+
+.ball {
+  position: absolute;
+  background-color: red;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+}
