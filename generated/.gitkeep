@@ -1,3 +1,0 @@
-# generated folder
-
-by default, `main.py` will generate the app in this folder (you can customize with the `--directory=newFolderHere` flag).
