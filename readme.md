@@ -73,7 +73,7 @@ In this way you can use your clone of this repo itself to prototype/develop your
 This is the new thing in smol developer v1! Add `smol developer` to your own projects!
 
 ```bash
-pip install smol-dev
+pip install smol_dev
 ``` 
 
 Here you can basically look at the contents of `main.py` as our "documentation" of how you can use these functions and prompts in your own app:
