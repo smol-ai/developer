@@ -44,6 +44,22 @@ def planPrompt1():
 
   only list the filepaths you would write, and return them as a python list of strings.
   do not add any other explanation, only return a python list of strings.
+  
+  Good response:
+  ["app.py","function.py","folder/file.py"]
+  
+  Bad response:
+  - app.py
+  - function.py
+  - folder/file.py
+  
+  Good response:
+  ["app.py","function.py","folder/file.py"]
+  
+  Bad response:
+  - `app.py` a description here
+  - `function.py` another description here
+  - `folder/file.py` more description here
   """
   
 def planPrompt2(sourcePrompt, filepaths_string):
@@ -64,7 +80,7 @@ def planPrompt2(sourcePrompt, filepaths_string):
   """
   
 
-def filePrompt(sourcePrompt, filepaths_string, filename):
+def filePrompt(sourcePrompt, filepaths_string, shared_dependencies, filename):
   systemPrompt = f"""You are an AI developer who is trying to write a program that will generate code for the user based on their intent.
 
     the app is: {sourcePrompt}
@@ -96,5 +112,5 @@ def filePrompt(sourcePrompt, filepaths_string, filename):
 
     Begin generating the code now.
 
-    """,
+    """
   return systemPrompt, userPrompt

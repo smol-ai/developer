@@ -58,7 +58,7 @@ def generate_file(
     shared_dependencies=None,
     prompt=None,
 ):
-    systemPrompt, userPrompt = filePrompt(prompt, filepaths_string, filename)
+    systemPrompt, userPrompt = filePrompt(prompt, filepaths_string, shared_dependencies, filename)
 
     # call openai api with this prompt
     filecode = generate_response(model, systemPrompt, userPrompt)
@@ -83,7 +83,7 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
     # call openai api with this prompt
     filepaths_string = generate_response(
         model,
-        planPrompt(),
+        planPrompt1(),
         prompt,
     )
     print(filepaths_string)
@@ -114,7 +114,7 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
 
             # understand shared dependencies
             shared_dependencies = generate_response(
-                model, planPrompt2(sourcePrompt, filepaths_string), prompt
+                model, planPrompt2(prompt, filepaths_string), prompt
             )
             print(shared_dependencies)
             # write shared dependencies as a md file inside the generated directory
@@ -135,6 +135,15 @@ def main(prompt, directory=DEFAULT_DIR, model=DEFAULT_MODEL, file=None):
 
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-d', '--directory', default=DEFAULT_DIR, help='Directory to write generated files to.')
+    parser.add_argument('-f', '--file', help='If you only want to regenerate a single file, specify it here.')
+    parser.add_argument('-m', '--model', default=DEFAULT_MODEL, help='Specify your desired model here (we recommend using `gpt-4`)')
+    parser.add_argument('-p', '--prompt', help='Write your full prompt as a string, or give a path to a .md file with your prompt')
+    args = parser.parse_args()
+
+    
     # Check for arguments
     if len(sys.argv) < 2:
         # Looks like we don't have a prompt. Check if prompt.md exists
@@ -144,15 +153,11 @@ if __name__ == "__main__":
             sys.exit(1)
 
         # Still here? Assign the prompt file name to prompt
-        prompt = "prompt.md"
+        args.prompt = "prompt.md"
 
     else:
         # Set prompt to the first argument
         prompt = sys.argv[1]
 
-    # Pull everything else as normal
-    directory = sys.argv[2] if len(sys.argv) > 2 else generatedDir
-    file = sys.argv[3] if len(sys.argv) > 3 else None
-
     # Run the main function
-    main(prompt, directory, file)
+    main(args.prompt, directory = args.directory, model = args.model, file=args.file)

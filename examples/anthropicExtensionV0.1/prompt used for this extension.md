@@ -9,7 +9,7 @@ a Chrome Manifest V3 extension that reads the current page, and offers a popup U
   - pops up a small window with a simple, modern, slick, minimalistic styled html popup
   - in the popup script
     - retrieves the page content data using a `getPageContent` action (and the background listens for the `getPageContent` action and retrieves that data) 
-    - check extension storage for an `apiKey`, and if it isn't stored, asks for an API key to Anthropic Claude and stores it.
+    - check extension storage for an `apiKey`, and if it isn't stored, ask the user for an API key to Anthropic Claude and stores it.
     - calls the Anthropic model endpoint https://api.anthropic.com/v1/complete with the `claude-instant-v1-100k` model with: 
       - append the page title
       - append the page content
@@ -60,7 +60,7 @@ Important Details:
 
 - in the string prompt sent to Anthropic, first include the page title and page content, and finally append the prompt, clearly vertically separated by spacing.
 
-- if the Anthropic api call is a 401, handle that by clearing the stored anthropic api key and asking for it again.
+- if the Anthropic api call is a 401, handle that in popup.js by clearing the stored anthropic api key and asking for it again.
 
 - add styles to make sure the popup's styling follows the basic rules of web design, for example having margins around the body, and a system font stack.
 

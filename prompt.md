@@ -72,6 +72,8 @@ Important Details:
 
 - It has to run in a browser environment, so no Nodejs APIs allowed.
 
+- It follows Chrome Manifest v3 and has a default icon named `icon.png` in the root folder
+
 - the return signature of the anthropic api is curl https://api.anthropic.com/v1/complete\
   -H "x-api-key: $API_KEY"\
   -H 'content-type: application/json'\

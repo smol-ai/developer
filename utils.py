@@ -18,15 +18,19 @@ def reportTokens(prompt, model=DEFAULT_MODEL):
     import tiktoken # keep import statements here to fit Modal container restrictions https://modal.com/docs/guide/custom-container#additional-python-packages
     encoding = tiktoken.encoding_for_model(model)
     # print number of tokens in light gray, with first 10 characters of prompt in green
+    
+    print('----------------')
+    print(prompt)
+    print('----------------')
     print(
         "\033[37m"
         + str(len(encoding.encode(prompt)))
         + " tokens\033[0m"
         + " in prompt: "
         + "\033[92m"
-        + prompt[:50]
+        + prompt[:100]
         + "\033[0m" 
-        + ("..." if len(prompt) > 50 else "")
+        + ("..." if len(prompt) > 100 else "")
     )
     
     
