@@ -60,7 +60,7 @@ def specify_file_paths(prompt: str, plan: str, model: str = 'gpt-3.5-turbo-0613'
     return result
 
 
-def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, model: str='gpt-3.5-turbo-0613'):
+def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, model: str='gpt-3.5-turbo-0613', extra_messages: List[Any] = []):
     completion = openai.ChatCompletion.create(
         model=model,
         temperature=0.7,
@@ -70,14 +70,16 @@ def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, 
                 "role": "system",
                 "content": f"""{SMOL_DEV_SYSTEM_PROMPT}
       
-  In response to the user's prompt, 
-  Please name and briefly describe the structure of the app we will generate, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
+    In response to the user's prompt, write a plan.
+  In this plan, please name and briefly describe the structure of the app we will generate, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
+                Respond only with plans following the above schema.
                   """,
             },
             {
                 "role": "user",
                 "content": f""" the app prompt is: {prompt} """,
             },
+            *extra_messages,
         ],
     )
 
