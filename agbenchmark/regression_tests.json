@@ -1,0 +1,8 @@
+{
+    "TestWriteFile": {
+        "difficulty": "basic",
+        "dependencies": [],
+        "test": "agbenchmark/challenges/interface/write_file",
+        "success": true
+    }
+}

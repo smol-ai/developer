@@ -1,0 +1,5 @@
+{
+  "workspace": "generated",
+  "entry_path": "agbenchmark.benchmarks",
+  "cutoff": 60
+}
