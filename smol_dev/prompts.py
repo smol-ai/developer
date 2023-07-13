@@ -20,6 +20,18 @@ When writing code, add comments to explain what you intend to do and why it alig
 """
 
 
+def extract_file_paths(prompt: str, plan: str):
+    # Regular expression pattern to match file names
+    file_pattern = r'\b[\w.-]+\.\w+\b'
+    file_names = []
+    for text in [prompt, plan]:
+        names = re.findall(file_pattern, text)
+        file_names.extend(names)
+    assert file_names, 'No file names found in the given texts'
+    unique_file_names = list(set(file_names))
+    return unique_file_names
+
+
 @openai_function
 def file_paths(files_to_edit: List[str]) -> List[str]:
     """
@@ -69,7 +81,7 @@ def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, 
             {
                 "role": "system",
                 "content": f"""{SMOL_DEV_SYSTEM_PROMPT}
-      
+
     In response to the user's prompt, write a plan.
   In this plan, please name and briefly describe the structure of the app we will generate, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
                 Respond only with plans following the above schema.
@@ -111,13 +123,13 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
             {
                 "role": "system",
                 "content": f"""{SMOL_DEV_SYSTEM_PROMPT}
-      
-  In response to the user's prompt, 
+
+  In response to the user's prompt,
   Please name and briefly describe the structure of the app we will generate, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
 
-  We have broken up the program into per-file generation. 
-  Now your job is to generate only the code for the file: {current_file} 
-  
+  We have broken up the program into per-file generation.
+  Now your job is to generate only the code for the file: {current_file}
+
   only write valid code for the given filepath and file type, and return only the code.
   do not add any other explanation, only return valid code for that file type.
                   """,
@@ -134,20 +146,20 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
                 "role": "user",
                 "content": f"""
     Make sure to have consistent filenames if you reference other files we are also generating.
-    
-    Remember that you must obey 3 things: 
+
+    Remember that you must obey 3 things:
        - you are generating code for the file {current_file}
        - do not stray from the names of the files and the plan we have decided on
        - MOST IMPORTANT OF ALL - every line of code you generate must be valid code. Do not include code fences in your response, for example
-    
+
     Bad response (because it contains the code fence):
-    ```javascript 
+    ```javascript
     console.log("hello world")
     ```
-    
+
     Good response (because it only contains the code):
     console.log("hello world")
-    
+
     Begin generating the code now.
 
     """,
