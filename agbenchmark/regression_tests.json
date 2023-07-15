@@ -1,8 +1,10 @@
 {
     "TestWriteFile": {
-        "difficulty": "basic",
+        "difficulty": "interface",
         "dependencies": [],
-        "test": "agbenchmark/challenges/interface/write_file",
-        "success": true
+        "data_path": "agbenchmark/challenges/interface/write_file"
+    },
+    "TestBasicCodeGeneration": {
+        "data_path": "agbenchmark/challenges/code/d4",
     }
 }
