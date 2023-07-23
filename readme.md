@@ -117,13 +117,13 @@ curl --request POST \
   --url http://localhost:8000/agent/tasks \
   --header 'Content-Type: application/json' \
   --data '{
-	"input": "Write '\''Hello world!'\'' to hi.txt"
+	"input": "Write simple script in Python. It should write '\''Hello world!'\'' to hi.txt"
 }'
 ```
 
 You will get a response like this:
 ```json
-{"input":"Write 'Hello world!' to hi.txt","task_id":"e6d768bb-4c50-4007-9853-aeffb46c77be","artifacts":[]}
+{"input":"Write simple script in Python. It should write 'Hello world!' to hi.txt","task_id":"d2c4e543-ae08-4a97-9ac5-5f9a4459cb19","artifacts":[]}
 ```
 
 Then to **execute one step of the task** copy the `task_id` you got from the previous request and run:
@@ -138,18 +138,23 @@ or you can use [Python client library](https://github.com/e2b-dev/agent-protocol
 ```python
 from agent_protocol_client import AgentApi, ApiClient, TaskRequestBody
 
-async def main():
-    async with ApiClient() as api_client:
-        # Create an instance of the API class
-        api_instance = AgentApi(api_client)
-        task_request_body = TaskRequestBody(input="Write 'Hello world!' to hi.txt.")
+...
 
-        task = await api_instance.create_agent_task(
-            task_request_body=task_request_body
-        )
-        task_id = task.task_id
-        response = await api_instance.execute_agent_task_step(task_id=task_id)
-        ...
+prompt = "Write simple script in Python. It should write 'Hello world!' to hi.txt"
+
+async with ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = AgentApi(api_client)
+    task_request_body = TaskRequestBody(input=prompt)
+
+    task = await api_instance.create_agent_task(
+        task_request_body=task_request_body
+    )
+    task_id = task.task_id
+    response = await api_instance.execute_agent_task_step(task_id=task_id)
+
+...
+
 ```
 
 ## examples/prompt gallery
