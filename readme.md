@@ -11,7 +11,7 @@
 
 > [Build the thing that builds the thing!](https://twitter.com/swyx/status/1657578738345979905) a `smol dev` for every dev in every situation
 
-This is a "junior developer" agent (aka `smol dev`) that either: 
+This is a "junior developer" agent (aka `smol dev`) that either:
 
 1. scaffolds an entire codebase out for you once you give it a product spec
 2. gives you basic building blocks to have a smol developer inside of your own app.
@@ -25,7 +25,7 @@ After the [successful initial v0 launch](https://twitter.com/swyx/status/1657578
 ### In Git Repo mode
 
 ```bash
-# install 
+# install
 git clone https://github.com/smol-ai/developer.git
 cd developer
 poetry install # install dependencies. pip install poetry if you need
@@ -34,7 +34,7 @@ poetry install # install dependencies. pip install poetry if you need
 python main.py "a HTML/JS/CSS Tic Tac Toe Game" # defaults to gpt-4-0613
 # python main.py "a HTML/JS/CSS Tic Tac Toe Game" --model=gpt-3.5-turbo-0613
 
-# other cli flags 
+# other cli flags
 python main.py --prompt prompt.md # for longer prompts, move them into a markdown file
 python main.py --prompt prompt.md --debug True # for debugging
 ```
@@ -49,7 +49,7 @@ This lets you develop apps as a human in the loop, as per the original version o
   <img height=200 src="https://pbs.twimg.com/media/FwEzVCcaMAE7t4h?format=jpg&name=large" />
 </p>
 
-*engineering with prompts, rather than prompt engineering* 
+*engineering with prompts, rather than prompt engineering*
 
 The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer centric, workflow:
 
@@ -68,13 +68,13 @@ Loop until happiness is attained. Notice that AI is only used as long as it is a
 
 In this way you can use your clone of this repo itself to prototype/develop your app.
 
-### In Library mode 
+### In Library mode
 
 This is the new thing in smol developer v1! Add `smol developer` to your own projects!
 
 ```bash
 pip install smol_dev
-``` 
+```
 
 Here you can basically look at the contents of `main.py` as our "documentation" of how you can use these functions and prompts in your own app:
 
@@ -94,17 +94,17 @@ file_paths = specify_file_paths(prompt, shared_deps) # returns an array of strin
 # loop through file_paths array and generate code for each file
 for file_path in file_paths:
     code = generate_code_sync(prompt, shared_deps, file_path) # generates the source code of each file
-    
+
     # do something with the source code of the file, eg. write to disk or display in UI
     # there is also an async `generate_code()` version of this
 ```
 
-### In API mode (via [e2b](https://www.e2b.dev/))
+### In API mode (via [Agent Protocol](https://github.com/e2b-dev/agent-protocol))
 To start the server run:
 ```bash
 poetry run api
 ```
-or 
+or
 ```bash
 python smol_dev/api.py
 ```
@@ -167,20 +167,20 @@ async with ApiClient() as api_client:
   <img src="https://github.com/smol-ai/developer/assets/6764957/6ffaac3b-5d90-460a-a590-c8a8c004bd36" height=200 />
 
 - [Prompt to Pokemon App](https://twitter.com/RobertCaracaus/status/1659312419485761536?s=20)
-  
+
   <img src="https://github.com/smol-ai/developer/assets/6764957/15fa189a-3f52-4618-ac8e-2a77b6500264" height=200 />
-  
+
 - [Political Campaign CRM Program example](https://github.com/smol-ai/developer/pull/22/files)
 - [Lessons from Creating a VSCode Extension with GPT-4](https://bit.kevinslin.com/p/leveraging-gpt-4-to-automate-the) (also on [HN](https://news.ycombinator.com/item?id=36071342))
 - [7 min Video: Smol AI Developer - Build ENTIRE Codebases With A Single Prompt](https://www.youtube.com/watch?v=DzRoYc2UGKI) produces a full working OpenAI CLI python app from a prompt
 
   <img src="https://github.com/smol-ai/developer/assets/6764957/e80058f1-ea9c-42dd-87ff-004b61f08f2e" height=200 />
-  
+
 - [12 min Video: SMOL AI - Develop Large Scale Apps with AGI in one click](https://www.youtube.com/watch?v=zsxyqz6SYp8) scaffolds a surprisingly complex React/Node/MongoDB full stack app in 40 minutes and $9
 
   <img src="https://github.com/smol-ai/developer/assets/6764957/c51f9f8c-021d-446a-b44d-7a6f48e64550" height=200 />
 
-I'm actively seeking more examples, please PR yours! 
+I'm actively seeking more examples, please PR yours!
 
 sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
 
@@ -205,12 +205,12 @@ please send in alternative implementations, and deploy strategies on alternative
   - teaching the program to understand how to code around a new API (Anthropic's API is after GPT3's knowledge cutoff) by just pasting in the `curl` input and output
   - pasting error messages into the prompt and vaguely telling the program how you'd like it handled. it kind of feels like "logbook driven programming".
 - **Debugging by `cat`ing** the whole codebase with your error message and getting specific fix suggestions - particularly delightful!
-- **Tricks for whole program coherence** - our chosen example usecase, Chrome extensions, have a lot of indirect dependencies across files. Any hallucination of cross dependencies causes the whole program to error. 
+- **Tricks for whole program coherence** - our chosen example usecase, Chrome extensions, have a lot of indirect dependencies across files. Any hallucination of cross dependencies causes the whole program to error.
   - We solved this by adding an intermediate step asking GPT to think through `shared_dependencies.md`, and then insisting on using that in generating each file. This basically means GPT is able to talk to itself...
-  - ... but it's not perfect, yet. `shared_dependencies.md` is sometimes not comperehensive in understanding what are hard dependencies between files. So we just solved it by specifying a specific `name` in the prompt. felt dirty at first but it works, and really it's just clear unambiguous communication at the end of the day. 
+  - ... but it's not perfect, yet. `shared_dependencies.md` is sometimes not comperehensive in understanding what are hard dependencies between files. So we just solved it by specifying a specific `name` in the prompt. felt dirty at first but it works, and really it's just clear unambiguous communication at the end of the day.
   - see `prompt.md` for SOTA smol-dev prompting
 - **Low activation energy for unfamiliar APIs**
-  - we have never really learned css animations, but now can just say we want a "juicy css animated red and white candy stripe loading indicator" and it does the thing. 
+  - we have never really learned css animations, but now can just say we want a "juicy css animated red and white candy stripe loading indicator" and it does the thing.
   - ditto for Chrome Extension Manifest v3 - the docs are an abject mess, but fortunately we don't have to read them now to just get a basic thing done
   - the Anthropic docs (bad bad) were missing guidance on what return signature they have. so just curl it and dump it in the prompt lol.
 - **Modal is all you need** - we chose Modal to solve 4 things:
@@ -241,7 +241,7 @@ things to try/would accept open issue discussions and PRs:
 - **ability to install its own dependencies**
   - this leaks into depending on the execution environment, which we all know is the path to dependency madness. how to avoid? dockerize? nix? [web container](https://twitter.com/litbid/status/1658154530385670150)?
   - Modal has an interesting possibility: generate functions that speak modal which also solves the dependency thing https://twitter.com/akshat_b/status/1658146096902811657
-- **self-heal** by running the code itself and use errors as information for reprompting 
+- **self-heal** by running the code itself and use errors as information for reprompting
   - however its a bit hard to get errors from the chrome extension environment so we did not try this
 - **using anthropic as the coding layer**
   - you can run `modal run anthropic.py --prompt prompt.md --outputdir=anthropic` to try it
