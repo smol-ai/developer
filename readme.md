@@ -99,7 +99,63 @@ for file_path in file_paths:
     # there is also an async `generate_code()` version of this
 ```
 
+### In API mode (via [e2b](https://www.e2b.dev/))
+To start the server run:
+```bash
+poetry run api
+```
+or 
+```bash
+python smol_dev/api.py
+```
 
+and then you can call the API using either the following commands:
+
+To **create a task** run:
+```bash
+curl --request POST \
+  --url http://localhost:8000/agent/tasks \
+  --header 'Content-Type: application/json' \
+  --data '{
+	"input": "Write simple script in Python. It should write '\''Hello world!'\'' to hi.txt"
+}'
+```
+
+You will get a response like this:
+```json
+{"input":"Write simple script in Python. It should write 'Hello world!' to hi.txt","task_id":"d2c4e543-ae08-4a97-9ac5-5f9a4459cb19","artifacts":[]}
+```
+
+Then to **execute one step of the task** copy the `task_id` you got from the previous request and run:
+
+```bash
+curl --request POST \
+  --url http://localhost:8000/agent/tasks/<task-id>/steps
+```
+
+or you can use [Python client library](https://github.com/e2b-dev/agent-protocol/tree/main/agent_client/python):
+
+```python
+from agent_protocol_client import AgentApi, ApiClient, TaskRequestBody
+
+...
+
+prompt = "Write simple script in Python. It should write 'Hello world!' to hi.txt"
+
+async with ApiClient() as api_client:
+    # Create an instance of the API class
+    api_instance = AgentApi(api_client)
+    task_request_body = TaskRequestBody(input=prompt)
+
+    task = await api_instance.create_agent_task(
+        task_request_body=task_request_body
+    )
+    task_id = task.task_id
+    response = await api_instance.execute_agent_task_step(task_id=task_id)
+
+...
+
+```
 
 ## examples/prompt gallery
 
