@@ -1,4 +1,8 @@
+import os
+import uuid
+
 from smol_dev.prompts import plan, specify_file_paths, generate_code
+from smol_dev.utils import write_file
 
 from agent_protocol import (
     Agent,
@@ -7,7 +11,11 @@ from agent_protocol import (
 )
 
 
+FOLDER_PATH = os.path.join(os.getcwd(), "workspace")
+
+
 async def smol_developer(prompt: str):
+    unique_id = str(uuid.uuid4())
     shared_deps = plan(prompt)
     yield shared_deps
 
@@ -16,6 +24,7 @@ async def smol_developer(prompt: str):
 
     for file_path in file_paths:
         code = await generate_code(prompt, shared_deps, file_path)
+        write_file(os.path.join(FOLDER_PATH, unique_id, file_path), code)
         yield code
 
 
