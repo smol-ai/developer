@@ -6,6 +6,7 @@
   <img alt="Deploy agent on e2b button" src="https://app.e2b.dev/api/badge"/>
 </picture>
 </a>
+<a href="https://github.com/modal-labs/devlooper"><img alt="deploy on modal.com" src="https://avatars.githubusercontent.com/u/88658467?s=48&v=4">Deploy on Modal</img></a>
 
 ***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
 
