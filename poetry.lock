@@ -2,22 +2,35 @@
 
 [[package]]
 name = "agent-protocol"
-version = "0.2.0"
+version = "0.2.3"
 description = "API for interacting with Agent"
 optional = false
 python-versions = ">=3.7,<4.0.0"
 files = [
-    {file = "agent_protocol-0.2.0-py3-none-any.whl", hash = "sha256:b616d3b230e6fef3b2dfbd13c9f8a40b9b3425f43797f31d903d1c18f28ea49f"},
-    {file = "agent_protocol-0.2.0.tar.gz", hash = "sha256:e8ea552d2b7e7fcaf03112c4653ef4a8bc8c15a43ef35d3a89cb7fa978eee7dd"},
+    {file = "agent_protocol-0.2.3-py3-none-any.whl", hash = "sha256:d4dcb51fe1f04a5d2e4ce30291d806d005ec40c91698c063295fb8bcc18bebc5"},
+    {file = "agent_protocol-0.2.3.tar.gz", hash = "sha256:ebccf85a13c390c2d9f32c6a1659cccb9f6fda5708aa86bcef3fea6ec8a2cf6a"},
 ]
 
 [package.dependencies]
+aiofiles = ">=23.1.0,<24.0.0"
 click = ">=8.1.6,<9.0.0"
 fastapi = ">=0.100.0,<0.101.0"
 hypercorn = ">=0.14.4,<0.15.0"
 pydantic = ">=1.10.5,<2.0.0"
-pytest = ">=7.4.0,<8.0.0"
+pytest = ">=7.0.0,<8.0.0"
+python-multipart = ">=0.0.6,<0.0.7"
 requests = ">=2.31.0,<3.0.0"
+
+[[package]]
+name = "aiofiles"
+version = "23.1.0"
+description = "File support for asyncio."
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "aiofiles-23.1.0-py3-none-any.whl", hash = "sha256:9312414ae06472eb6f1d163f555e466a23aed1c8f60c30cccf7121dba2e53eb2"},
+    {file = "aiofiles-23.1.0.tar.gz", hash = "sha256:edd247df9a19e0db16534d4baaf536d6609a43e1de5401d7a4c1c148753a1635"},
+]
 
 [[package]]
 name = "aiohttp"
@@ -735,6 +748,20 @@ pluggy = ">=0.12,<2.0"
 testing = ["argcomplete", "attrs (>=19.2.0)", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "setuptools", "xmlschema"]
 
 [[package]]
+name = "python-multipart"
+version = "0.0.6"
+description = "A streaming multipart parser for Python"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "python_multipart-0.0.6-py3-none-any.whl", hash = "sha256:ee698bab5ef148b0a760751c261902cd096e57e10558e11aca17646b74ee1c18"},
+    {file = "python_multipart-0.0.6.tar.gz", hash = "sha256:e9925a80bb668529f1b67c7fdb0a5dacdd7cbfc6fb0bff3ea443fe22bdd62132"},
+]
+
+[package.extras]
+dev = ["atomicwrites (==1.2.1)", "attrs (==19.2.0)", "coverage (==6.5.0)", "hatch", "invoke (==1.7.3)", "more-itertools (==4.3.0)", "pbr (==4.3.0)", "pluggy (==1.0.0)", "py (==1.11.0)", "pytest (==7.2.0)", "pytest-cov (==4.0.0)", "pytest-timeout (==2.1.0)", "pyyaml (==5.1)"]
+
+[[package]]
 name = "requests"
 version = "2.31.0"
 description = "Python HTTP for Humans."
@@ -949,4 +976,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "6f51ab11aec10cf8ee8b724e09eba565683a43ddbedd7deafa55ae8340382112"
+content-hash = "c9659022543244cf9ad46ebfe70156f3f10cedacf2f67e38ec943b994f78ca5b"
