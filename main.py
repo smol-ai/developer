@@ -25,8 +25,8 @@ if __name__ == "__main__":
   """
     if len(sys.argv) == 2:
         prompt = sys.argv[1]
+        args = None
     else:
-        
         parser = argparse.ArgumentParser()
         parser.add_argument("--prompt", type=str, help="Prompt for the app to be created.")
         parser.add_argument("--model", type=str, default="gpt-4-0613", help="model to use. can also use gpt-3.5-turbo-0613")
@@ -42,5 +42,9 @@ if __name__ == "__main__":
             prompt = promptfile.read()
 
     print(prompt)
-        
-    main(prompt=prompt, generate_folder_path=args.generate_folder_path, debug=args.debug, model=args.model)
+    
+    if args is None:
+        # This is in case we're just calling the main function directly with a prompt
+        main(prompt=prompt)
+    else:
+        main(prompt=prompt, generate_folder_path=args.generate_folder_path, debug=args.debug, model=args.model)
