@@ -81,7 +81,7 @@ pip install smol_dev
 Here you can basically look at the contents of `main.py` as our "documentation" of how you can use these functions and prompts in your own app:
 
 ```python
-from smol_dev.prompts import plan, specify_file_paths, generate_code_sync
+from smol_dev.prompts import plan, extract_file_paths, generate_code_sync
 
 prompt = "a HTML/JS/CSS Tic Tac Toe Game"
 
@@ -89,7 +89,7 @@ shared_deps = plan(prompt) # returns a long string representing the coding plan
 
 # do something with the shared_deps plan if you wish, for example ask for user confirmation/edits and iterate in a loop
 
-file_paths = specify_file_paths(prompt, shared_deps) # returns an array of strings representing the filenames it needs to write based on your prompt and shared_deps. Relies on OpenAI's new Function Calling API to guarantee JSON.
+file_paths = extract_file_paths(prompt, shared_deps) # returns an array of strings representing the filenames it needs to write based on your prompt and shared_deps. Relies on OpenAI's new Function Calling API to guarantee JSON.
 
 # do something with the filepaths if you wish, for example display a plan
 
