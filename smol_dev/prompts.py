@@ -10,6 +10,9 @@ from tenacity import (
     stop_after_attempt,
     wait_random_exponential,
 )
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 SMOL_DEV_SYSTEM_PROMPT = """
@@ -39,11 +42,7 @@ def specify_file_paths(prompt: str, plan: str, model: str = 'gpt-3.5-turbo-0613'
             {
                 "role": "system",
                 "content": f"""{SMOL_DEV_SYSTEM_PROMPT}
-          
-      When given their intent, create a complete, exhaustive list of filepaths that the user would write to make the program.
-      
-      only list the filepaths you would write, and return them as a python list of strings. 
-      do not add any other explanation, only return a python list of strings.
+      Given the prompt and the plan, return a list of strings corresponding to the new files that will be generated.
                   """,
             },
             {
@@ -69,9 +68,9 @@ def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, 
             {
                 "role": "system",
                 "content": f"""{SMOL_DEV_SYSTEM_PROMPT}
-      
-    In response to the user's prompt, write a plan.
-  In this plan, please name and briefly describe the structure of the app we will generate, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
+
+    In response to the user's prompt, write a plan using GitHub Markdown syntax. Begin with a YAML description of the new files that will be created.
+  In this plan, please name and briefly describe the structure of code that will be generated, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
                 Respond only with plans following the above schema.
                   """,
             },
@@ -85,15 +84,17 @@ def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, 
 
     collected_messages = []
     for chunk in completion:
-        chunk_message = chunk["choices"][0]["delta"]  # extract the message
-        collected_messages.append(chunk_message)  # save the message
-        if stream_handler:
-            try:
-                stream_handler(chunk_message["content"].encode("utf-8"))
-            except Exception as err:
-                print("\nstream_handler error:", err)
-                print(chunk_message)
-    if stream_handler and stream_handler.onComplete: stream_handler.onComplete('done')
+        chunk_message_dict = chunk["choices"][0]
+        chunk_message = chunk_message_dict["delta"]  # extract the message
+        if chunk_message_dict["finish_reason"] is None:
+            collected_messages.append(chunk_message)  # save the message
+            if stream_handler:
+                try:
+                    stream_handler(chunk_message["content"].encode("utf-8"))
+                except Exception as err:
+                    logger.info("\nstream_handler error:", err)
+                    logger.info(chunk_message)
+    # if stream_handler and hasattr(stream_handler, "onComplete"): stream_handler.onComplete('done')
     full_reply_content = "".join([m.get("content", "") for m in collected_messages])
     return full_reply_content
 
@@ -111,13 +112,13 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
             {
                 "role": "system",
                 "content": f"""{SMOL_DEV_SYSTEM_PROMPT}
-      
-  In response to the user's prompt, 
+
+  In response to the user's prompt,
   Please name and briefly describe the structure of the app we will generate, including, for each file we are generating, what variables they export, data schemas, id names of every DOM elements that javascript functions will use, message names, and function names.
 
-  We have broken up the program into per-file generation. 
-  Now your job is to generate only the code for the file: {current_file} 
-  
+  We have broken up the program into per-file generation.
+  Now your job is to generate only the code for the file: {current_file}
+
   only write valid code for the given filepath and file type, and return only the code.
   do not add any other explanation, only return valid code for that file type.
                   """,
@@ -134,20 +135,20 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
                 "role": "user",
                 "content": f"""
     Make sure to have consistent filenames if you reference other files we are also generating.
-    
-    Remember that you must obey 3 things: 
+
+    Remember that you must obey 3 things:
        - you are generating code for the file {current_file}
        - do not stray from the names of the files and the plan we have decided on
        - MOST IMPORTANT OF ALL - every line of code you generate must be valid code. Do not include code fences in your response, for example
-    
+
     Bad response (because it contains the code fence):
-    ```javascript 
+    ```javascript
     console.log("hello world")
     ```
-    
+
     Good response (because it only contains the code):
     console.log("hello world")
-    
+
     Begin generating the code now.
 
     """,
@@ -158,15 +159,18 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
 
     collected_messages = []
     async for chunk in await completion:
-        chunk_message = chunk["choices"][0]["delta"]  # extract the message
-        if stream_handler:
-            try:
-                stream_handler(chunk_message['content'].encode('utf-8'))
-            except Exception as err:
-                pass
-        collected_messages.append(chunk_message)  # save the message
+        chunk_message_dict = chunk["choices"][0]
+        chunk_message = chunk_message_dict["delta"]  # extract the message
+        if chunk_message_dict["finish_reason"] is None:
+            collected_messages.append(chunk_message)  # save the message
+            if stream_handler:
+                try:
+                    stream_handler(chunk_message["content"].encode("utf-8"))
+                except Exception as err:
+                    logger.info("\nstream_handler error:", err)
+                    logger.info(chunk_message)
 
-    if stream_handler and stream_handler.onComplete: stream_handler.onComplete('done')
+    # if stream_handler and hasattr(stream_handler, "onComplete"): stream_handler.onComplete('done')
     code_file = "".join([m.get("content", "") for m in collected_messages])
 
     pattern = r"```[\w\s]*\n([\s\S]*?)```"  # codeblocks at start of the string, less eager
