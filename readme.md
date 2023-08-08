@@ -33,12 +33,14 @@ cd developer
 poetry install # install dependencies. pip install poetry if you need
 
 # run
-python main.py "a HTML/JS/CSS Tic Tac Toe Game" # defaults to gpt-4-0613
-# python main.py "a HTML/JS/CSS Tic Tac Toe Game" --model=gpt-3.5-turbo-0613
+poetry run python main.py --prompt "a HTML/JS/CSS Tic Tac Toe Game"
 
-# other cli flags
-python main.py --prompt prompt.md # for longer prompts, move them into a markdown file
-python main.py --prompt prompt.md --debug True # for debugging
+# other cli flags 
+poetry run python main.py --prompt prompt.md # for longer prompts, move them into a markdown file
+poetry run python main.py --prompt prompt.md --debug True # for debugging
+poetry run python main.py --prompt prompt.md --model gpt-3.5-turbo-0613 # change model, default is gpt-4-0613
+# Change the target folder, default is generate/. Note that main will delete what is currently in the folder.
+poetry run python main.py --prompt prompt.md --generate_folder_path /path/to/folder/
 ```
 
 <details>
