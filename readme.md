@@ -8,6 +8,8 @@
 </a>
 <a href="https://github.com/modal-labs/devlooper"><img src="https://github.com/smol-ai/developer/assets/6764957/6af16d37-2494-4722-b3a2-6fc91c005451"></img>
 </a>
+<a href="https://twitter.com/morph_labs/status/1689321673151979536"><img src="https://avatars.githubusercontent.com/u/136536927?s=40&v=4" alt="Morph"></img> Morph
+</a>
 
 ***Human-centric & Coherent Whole Program Synthesis*** aka your own personal junior developer
 
