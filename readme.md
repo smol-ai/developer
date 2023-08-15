@@ -33,14 +33,15 @@ After the [successful initial v0 launch](https://twitter.com/swyx/status/1657578
 git clone https://github.com/smol-ai/developer.git
 cd developer
 poetry install # install dependencies. pip install poetry if you need
+poetry shell # activate virtualenv
 
 # run
-python main.py "a HTML/JS/CSS Tic Tac Toe Game" # defaults to gpt-4-0613
-# python main.py "a HTML/JS/CSS Tic Tac Toe Game" --model=gpt-3.5-turbo-0613
+python3 main.py "a HTML/JS/CSS Tic Tac Toe Game" # defaults to gpt-4-0613
+# python3 main.py "a HTML/JS/CSS Tic Tac Toe Game" --model=gpt-3.5-turbo-0613
 
 # other cli flags
-python main.py --prompt prompt.md # for longer prompts, move them into a markdown file
-python main.py --prompt prompt.md --debug True # for debugging
+python3 main.py --prompt prompt.md # for longer prompts, move them into a markdown file
+python3 main.py --prompt prompt.md --debug True # for debugging
 ```
 
 <details>
@@ -110,7 +111,7 @@ poetry run api
 ```
 or
 ```bash
-python smol_dev/api.py
+python3 smol_dev/api.py
 ```
 
 and then you can call the API using either the following commands:
