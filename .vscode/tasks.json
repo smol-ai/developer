@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // Install or update all dependencies for all projects in the monrepo
+        {
+            "label": "poetry-install",
+            "type": "shell",
+            "command": "poetry install",
+            "problemMatcher": [], // Empty so users are not promted to select progress reporting
+        },
+    ]
+}
