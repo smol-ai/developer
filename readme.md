@@ -44,6 +44,8 @@ python3 main.py --prompt prompt.md # for longer prompts, move them into a markdo
 python3 main.py --prompt prompt.md --debug True # for debugging
 ```
 
+> Make sure to copy `.example.env` to `.env` and fill in your OpenAI API key
+
 <details>
   <summary>
 This lets you develop apps as a human in the loop, as per the original version of smol developer.
@@ -72,6 +74,8 @@ Loop until happiness is attained. Notice that AI is only used as long as it is a
 </details>
 
 In this way you can use your clone of this repo itself to prototype/develop your app.
+
+Alternatively, you can install and debug smol-developer in VS Code just by pressing F5 (using the preconfigured `launch.json`).
 
 ### In Library mode
 
