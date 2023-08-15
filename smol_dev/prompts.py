@@ -11,8 +11,13 @@ from tenacity import (
     wait_random_exponential,
 )
 import logging
+import os
+from dotenv import load_dotenv
 
 logger = logging.getLogger(__name__)
+
+load_dotenv()
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 
 SMOL_DEV_SYSTEM_PROMPT = """
