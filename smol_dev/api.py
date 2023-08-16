@@ -37,7 +37,7 @@ async def _generate_file_paths(task: Task, step: Step) -> Step:
             f"Generate code for {file_path}",
             additional_properties={
                 "shared_deps": shared_deps,
-                "file_path": file_paths[-1],
+                "file_path": file_path,
             },
         )
 
