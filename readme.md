@@ -33,6 +33,7 @@ After the [successful initial v0 launch](https://twitter.com/swyx/status/1657578
 git clone https://github.com/smol-ai/developer.git
 cd developer
 poetry install # install dependencies. pip install poetry if you need
+poetry shell #if you dont run this it will not work
 
 # run
 python main.py "a HTML/JS/CSS Tic Tac Toe Game" # defaults to gpt-4-0613
