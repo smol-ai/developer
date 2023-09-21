@@ -186,7 +186,7 @@ async with ApiClient() as api_client:
 
 I'm actively seeking more examples, please PR yours!
 
-sorry for the lack of examples, I know that is frustrating but I wasnt ready for so many of you lol
+sorry for the lack of examples, I know that is frustrating but I wasn't ready for so many of you lol
 
 ## major forks/alternatives
 
@@ -229,7 +229,7 @@ please send in alternative implementations, and deploy strategies on alternative
 
 We were working on a Chrome Extension, which requires images to be generated, so we added some usecase specific code in there to skip destroying/regenerating them, that we haven't decided how to generalize.
 
-We dont have access to GPT4-32k, but if we did, we'd explore dumping entire API/SDK documentation into context.
+We don't have access to GPT4-32k, but if we did, we'd explore dumping entire API/SDK documentation into context.
 
 The feedback loop is very slow right now (`time` says about 2-4 mins to generate a program with GPT4, even with parallelization due to Modal (occasionally spiking higher)), but it's a safe bet that it will go down over time (see also "future directions" below).
 
@@ -241,14 +241,14 @@ things to try/would accept open issue discussions and PRs:
 - **specify .md files for each generated file**, with further prompts that could finetune the output in each of them
   - so basically like `popup.html.md` and `content_script.js.md` and so on
 - **bootstrap the `prompt.md`** for existing codebases - write a script to read in a codebase and write a descriptive, bullet pointed prompt that generates it
-  - done by `smol pm`, but its not very good yet - would love for some focused polish/effort until we have quine smol developer that can generate itself lmao
+  - done by `smol pm`, but it's not very good yet - would love for some focused polish/effort until we have quine smol developer that can generate itself lmao
 - **ability to install its own dependencies**
   - this leaks into depending on the execution environment, which we all know is the path to dependency madness. how to avoid? dockerize? nix? [web container](https://twitter.com/litbid/status/1658154530385670150)?
   - Modal has an interesting possibility: generate functions that speak modal which also solves the dependency thing https://twitter.com/akshat_b/status/1658146096902811657
 - **self-heal** by running the code itself and use errors as information for reprompting
-  - however its a bit hard to get errors from the chrome extension environment so we did not try this
+  - however it's a bit hard to get errors from the chrome extension environment so we did not try this
 - **using anthropic as the coding layer**
   - you can run `modal run anthropic.py --prompt prompt.md --outputdir=anthropic` to try it
-  - but it doesnt work because anthropic doesnt follow instructions to generate file code very well.
+  - but it doesn't work because anthropic doesn't follow instructions to generate file code very well.
 - **make agents that autonomously run this code in a loop/watch the prompt file** and regenerate code each time, on a new git branch
   - the code could be generated on 5 simultaneous git branches and checking their output would just involve switching git branches
