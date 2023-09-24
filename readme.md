@@ -55,7 +55,7 @@ This lets you develop apps as a human in the loop, as per the original version o
 
 *engineering with prompts, rather than prompt engineering*
 
-The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer centric, workflow:
+The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer-centric, workflow:
 
 - Human writes a basic prompt for the app they want to build
 - `main.py` generates code
@@ -66,7 +66,7 @@ The demo example in `prompt.md` shows the potential of AI-enabled, but still fir
   - *paste the error into the prompt* just like they would file a GitHub issue
   - for extra help, they can use `debugger.py` which reads the whole codebase to make specific code change suggestions
 
-Loop until happiness is attained. Notice that AI is only used as long as it is adding value - once it gets in your way, just take over the codebase from your smol junior developer with no fuss and no hurt feelings. (*we could also have smol-dev take over an existing codebase and bootstrap its own prompt... but that's a Future Direction*)
+Loop until happiness is attained. Notice that AI is only used as long as it adds value - once it gets in your way, just take over the codebase from your smol junior developer with no fuss and no hurt feelings. (*we could also have smol-dev take over an existing codebase and bootstrap its own prompt... but that's a Future Direction*)
 
 </details>
 
