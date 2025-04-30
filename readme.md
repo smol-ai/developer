@@ -30,17 +30,17 @@ After the [successful initial v0 launch](https://twitter.com/swyx/status/1657578
 
 ```bash
 # install
-git clone https://github.com/smol-ai/developer.git
-cd developer
-poetry install # install dependencies. pip install poetry if you need
+uv tool install https://github.com/smol-ai/developer.git
 
 # run
-python main.py "a HTML/JS/CSS Tic Tac Toe Game" # defaults to gpt-4-0613
-# python main.py "a HTML/JS/CSS Tic Tac Toe Game" --model=gpt-3.5-turbo-0613
+smol-dev -h
+
+# alternatively, without installing to a fixed location
+# uvx --from https://github.com/smol-ai/developer.git smol-dev --prompt asdfasdf
 
 # other cli flags
-python main.py --prompt prompt.md # for longer prompts, move them into a markdown file
-python main.py --prompt prompt.md --debug True # for debugging
+smol-dev --prompt prompt.md # for longer prompts, move them into a markdown file
+smol-dev --prompt prompt.md --debug True # for debugging
 ```
 
 <details>
@@ -58,7 +58,7 @@ This lets you develop apps as a human in the loop, as per the original version o
 The demo example in `prompt.md` shows the potential of AI-enabled, but still firmly human developer centric, workflow:
 
 - Human writes a basic prompt for the app they want to build
-- `main.py` generates code
+- `smoll-dev` generates code
 - Human runs/reads the code
 - Human can:
   - simply add to the prompt as they discover underspecified parts of the prompt
@@ -80,7 +80,7 @@ This is the new thing in smol developer v1! Add `smol developer` to your own pro
 pip install smol_dev
 ```
 
-Here you can basically look at the contents of `main.py` as our "documentation" of how you can use these functions and prompts in your own app:
+Here you can basically look at the contents of `src/smoll_dev/main.py` as our "documentation" of how you can use these functions and prompts in your own app:
 
 ```python
 from smol_dev.prompts import plan, specify_file_paths, generate_code_sync
