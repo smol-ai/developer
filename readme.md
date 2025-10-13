@@ -196,6 +196,7 @@ please send in alternative implementations, and deploy strategies on alternative
 - **C#/Dotnet**: https://github.com/colhountech/smol-ai-dotnet in C#!
 - **Golang**: https://github.com/tmc/smol-dev-go in Go
 - https://github.com/gmchad/smol-plugin automatically generate @openai plugins by specifying your API in markdown in smol-developer style
+- **JAVA**: https://github.com/Eraoui909/smol-ai-java
 - your fork here!
 
 
