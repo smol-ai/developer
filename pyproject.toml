@@ -1,27 +1,42 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "smol_dev"
 version = "0.0.3"
 description = "python module of smol developer"
-authors = ["swyx <swyx@dontemail.me>"]
-license = "MIT"
 readme = "readme.md"
-packages = [{ include = "smol_dev" }]
+requires-python = ">=3.10,<4.0.0"
+license = {text = "MIT"}
+authors = [{name = "swyx", email = "swyx@dontemail.me"}]
+keywords = ["ai", "developer", "agent", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "openai>=0.27.8",
+    "openai-function-call>=0.0.5",
+    "tenacity>=8.2.2",
+    "agent-protocol>=1.0.0",
+]
 
-[tool.poetry.dependencies]
-python = ">=3.10,<4.0.0"
-openai = "^0.27.8"
-openai-function-call = "^0.0.5"
-tenacity = "^8.2.2"
-agent-protocol = "^1.0.0"
+[project.optional-dependencies]
+dev = []
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[project.urls]
+Homepage = "https://github.com/smol-ai/developer"
+"Bug Tracker" = "https://github.com/smol-ai/developer/issues"
 
-[tool.poetry.scripts]
+[project.scripts]
 src = "src.__main__:main"
 api = "smol_dev.api:main"
 
-[project.urls]
-"Homepage" = "https://github.com/smol-ai/developer"
-"Bug Tracker" = "https://github.com/smol-ai/developer/issues"
+[tool.hatch.build.targets.wheel]
+packages = ["smol_dev"]
