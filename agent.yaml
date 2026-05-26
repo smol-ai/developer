@@ -1,0 +1,35 @@
+spec_version: "0.1.0"
+name: smol-developer
+version: 1.0.0
+description: >
+  smol developer is a human-centric junior developer agent that synthesises entire
+  codebases from a single natural-language prompt. Given a product spec, it plans
+  the file tree, specifies each file's structure, and generates fully-implemented,
+  comment-annotated code — no TODOs left behind. It supports streaming output,
+  pluggable OpenAI-compatible models, and can be embedded as a library inside your
+  own app via the smol_dev Python package.
+license: MIT
+model:
+  preferred: openai:gpt-4o
+  fallback: openai:gpt-3.5-turbo
+runtime:
+  max_turns: 20
+  entrypoint: main.py
+skills:
+  - name: plan
+    description: >
+      Reads the user's product spec and produces a GitHub-Markdown plan that names
+      every file to be generated, describes exported variables, DOM element IDs,
+      function names, and data schemas.
+  - name: specify-file-paths
+    description: >
+      Given the plan, returns the exact list of file paths that will be created
+      using structured OpenAI function-calling output.
+  - name: generate-code
+    description: >
+      Generates the full, valid source code for a single file at a time, following
+      the agreed plan and the original prompt with no code-fence artefacts.
+compliance:
+  risk_tier: standard
+  supervision:
+    human_in_the_loop: destructive
