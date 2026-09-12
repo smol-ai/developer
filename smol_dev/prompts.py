@@ -3,7 +3,6 @@ import re
 import time
 from typing import List, Optional, Callable, Any
 
-import openai
 from openai_function_call import openai_function
 from tenacity import (
     retry,
@@ -11,6 +10,10 @@ from tenacity import (
     wait_random_exponential,
 )
 import logging
+from openai import OpenAI
+client = OpenAI()
+from openai import AsyncOpenAI
+aclient = AsyncOpenAI()
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +36,7 @@ def file_paths(files_to_edit: List[str]) -> List[str]:
 
 
 def specify_file_paths(prompt: str, plan: str, model: str = 'gpt-3.5-turbo-0613'):
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model=model,
         temperature=0.7,
         functions=[file_paths.openai_schema],
@@ -60,7 +63,7 @@ def specify_file_paths(prompt: str, plan: str, model: str = 'gpt-3.5-turbo-0613'
 
 
 def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, model: str='gpt-3.5-turbo-0613', extra_messages: List[Any] = []):
-    completion = openai.ChatCompletion.create(
+    completion = client.chat.completions.create(
         model=model,
         temperature=0.7,
         stream=True,
@@ -84,18 +87,18 @@ def plan(prompt: str, stream_handler: Optional[Callable[[bytes], None]] = None, 
 
     collected_messages = []
     for chunk in completion:
-        chunk_message_dict = chunk["choices"][0]
-        chunk_message = chunk_message_dict["delta"]  # extract the message
-        if chunk_message_dict["finish_reason"] is None:
+        chunk_message_dict = chunk.choices[0]
+        chunk_message = chunk_message_dict.delta  # extract the message
+        if chunk_message_dict.finish_reason is None:
             collected_messages.append(chunk_message)  # save the message
             if stream_handler:
                 try:
-                    stream_handler(chunk_message["content"].encode("utf-8"))
+                    stream_handler(chunk_message.content.encode("utf-8"))
                 except Exception as err:
                     logger.info("\nstream_handler error:", err)
                     logger.info(chunk_message)
     # if stream_handler and hasattr(stream_handler, "onComplete"): stream_handler.onComplete('done')
-    full_reply_content = "".join([m.get("content", "") for m in collected_messages])
+    full_reply_content = "".join([m.content or "" for m in collected_messages])
     return full_reply_content
 
 
@@ -105,7 +108,7 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
     first = True
     chunk_count = 0
     start_time = time.time()
-    completion = openai.ChatCompletion.acreate(
+    completion = aclient.chat.completions.create(
         model=model,
         temperature=0.7,
         messages=[
@@ -159,19 +162,19 @@ async def generate_code(prompt: str, plan: str, current_file: str, stream_handle
 
     collected_messages = []
     async for chunk in await completion:
-        chunk_message_dict = chunk["choices"][0]
-        chunk_message = chunk_message_dict["delta"]  # extract the message
-        if chunk_message_dict["finish_reason"] is None:
+        chunk_message_dict = chunk.choices[0]
+        chunk_message = chunk_message_dict.delta  # extract the message
+        if chunk_message_dict.finish_reason is None:
             collected_messages.append(chunk_message)  # save the message
             if stream_handler:
                 try:
-                    stream_handler(chunk_message["content"].encode("utf-8"))
+                    stream_handler(chunk_message.content.encode("utf-8"))
                 except Exception as err:
                     logger.info("\nstream_handler error:", err)
                     logger.info(chunk_message)
 
     # if stream_handler and hasattr(stream_handler, "onComplete"): stream_handler.onComplete('done')
-    code_file = "".join([m.get("content", "") for m in collected_messages])
+    code_file = "".join([m.content or "" for m in collected_messages])
 
     pattern = r"```[\w\s]*\n([\s\S]*?)```"  # codeblocks at start of the string, less eager
     code_blocks = re.findall(pattern, code_file, re.MULTILINE)

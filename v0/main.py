@@ -21,6 +21,7 @@ openai_image = modal.Image.debian_slim().pip_install("openai", "tiktoken")
 def generate_response(model, system_prompt, user_prompt, *args):
     # IMPORTANT: Keep import statements here due to Modal container restrictions https://modal.com/docs/guide/custom-container#additional-python-packages
     import openai
+    from openai import OpenAI
     import tiktoken
 
     def reportTokens(prompt):
@@ -30,7 +31,7 @@ def generate_response(model, system_prompt, user_prompt, *args):
         
 
     # Set up your OpenAI API credentials
-    openai.api_key = os.environ["OPENAI_API_KEY"]
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -52,10 +53,10 @@ def generate_response(model, system_prompt, user_prompt, *args):
     }
 
     # Send the API request
-    response = openai.ChatCompletion.create(**params)
+    response = client.chat.completions.create(**params)
 
     # Get the reply from the API response
-    reply = response.choices[0]["message"]["content"]
+    reply = response.choices[0].message.content
     return reply
 
 

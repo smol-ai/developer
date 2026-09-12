@@ -54,9 +54,10 @@ def main(prompt, directory=DEFAULT_DIR, model="gpt-3.5-turbo"):
 )
 def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
     import openai
+    from openai import OpenAI
 
     # Set up your OpenAI API credentials
-    openai.api_key = os.environ["OPENAI_API_KEY"]
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -76,8 +77,8 @@ def generate_response(system_prompt, user_prompt, model="gpt-3.5-turbo", *args):
     }
 
     # Send the API request
-    response = openai.ChatCompletion.create(**params)
+    response = client.chat.completions.create(**params)
 
     # Get the reply from the API response
-    reply = response.choices[0]["message"]["content"]
+    reply = response.choices[0].message.content
     return reply
