@@ -8,6 +8,7 @@ from constants import DEFAULT_DIR, DEFAULT_MODEL, DEFAULT_MAX_TOKENS
 
 def generate_response(system_prompt, user_prompt, *args):
     import openai
+    from openai import OpenAI
     import tiktoken
 
     def reportTokens(prompt):
@@ -24,7 +25,7 @@ def generate_response(system_prompt, user_prompt, *args):
         )
 
     # Set up your OpenAI API credentials
-    openai.api_key = os.environ["OPENAI_API_KEY"]
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
 
     messages = []
     messages.append({"role": "system", "content": system_prompt})
@@ -49,7 +50,7 @@ def generate_response(system_prompt, user_prompt, *args):
     keep_trying = True
     while keep_trying:
         try:
-            response = openai.ChatCompletion.create(**params)
+            response = client.chat.completions.create(**params)
             keep_trying = False
         except Exception as e:
             # e.g. when the API is too busy, we don't want to fail everything
@@ -58,7 +59,7 @@ def generate_response(system_prompt, user_prompt, *args):
             print("Retrying...")
 
     # Get the reply from the API response
-    reply = response.choices[0]["message"]["content"]
+    reply = response.choices[0].message.content
     return reply
 
 
