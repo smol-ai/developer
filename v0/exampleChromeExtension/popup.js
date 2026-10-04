@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const { pageTitle, pageContent } = response.pageContent;
       const fullPrompt = `${pageTitle}\n\n${pageContent}\n\n${prompt}`;
 
-      loadingIndicator.innerHTML = `Read page content of ${pageTitle}`;
+      loadingIndicator.textContent = `Read page content of ${pageTitle}`;
       loadingIndicator.style.display = 'block';
       content.innerHTML = '';
       userPrompt.disabled = true;
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return res.json();
         })
         .then((data) => {
-          content.innerHTML = data.completion;
+          content.textContent = data.completion;
           loadingIndicator.style.display = 'none';
           userPrompt.disabled = false;
           sendButton.disabled = false;
