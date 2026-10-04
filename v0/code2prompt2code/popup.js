@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const summary = await response.json();
-      content.innerHTML = summary;
+      content.textContent = summary;
       loadingIndicator.style.display = "none";
     });
   }
